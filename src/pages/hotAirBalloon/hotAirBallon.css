@@ -1,0 +1,12 @@
+@keyframes fly-up {
+  0% {
+    bottom: 0;
+  }
+  100% {
+    bottom: 60%;
+  }
+}
+
+.balloon-fly {
+  animation: fly-up 15s linear forwards;
+}

@@ -214,6 +214,7 @@ const apis = {
   // https://bdgcassino.apponrent.com/api/change_login_password
   // https://bdgcassino.apponrent.com/api/user-documents
   // https://bdgcassino.apponrent.com/api/submit-old-usdt-address
+  // https://bdgcassino.apponrent.com/api/aviator-lucky-bonus
 
   ifsc_modification: `${configModalUsaWin}ifsc_modification`,
   delete_account: `${configModalUsaWin}delete_account`,
@@ -222,6 +223,7 @@ const apis = {
   change_login_password: `${configModalUsaWin}change_login_password`,
   usdt_user_verification: `${configModalUsaWin}usdt-user-verification`,
   delete_usdt_address: `${configModalUsaWin}submit-old-usdt-address`,
+  aviator_lucky_bonus: `${configModalUsaWin}aviator-lucky-bonus`,
 };
 
 export default apis

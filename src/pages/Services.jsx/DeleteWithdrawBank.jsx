@@ -225,7 +225,9 @@ const handleSubmit = async (e) => {
             type="text"
             value={accountNumber}
             onChange={(e) => {
-              const onlyNumbers = e.target.value.replace(/\D/g, ""); // remove non-digits
+              const onlyNumbers = e.target.value
+                .replace(/\D/g, "")
+                .slice(0, 16); // remove non-digits
               setAccountNumber(onlyNumbers);
               setErrors((prev) => ({ ...prev, accountNumber: "" }));
             }}
@@ -248,12 +250,14 @@ const handleSubmit = async (e) => {
             type="text"
             value={accountName}
             onChange={(e) => {
-              setAccountName(e.target.value);
+              const onlyAlphabets = e.target.value.replace(/[^a-zA-Z\s]/g, ""); // allow spaces too
+              setAccountName(onlyAlphabets);
               setErrors((prev) => ({ ...prev, accountName: "" }));
             }}
-            placeholder="Please enter Bank Card Name"
+            placeholder="Please enter Bank Account Name"
             className="w-full px-4 py-2 rounded-md text-sm bg-white shadow focus:outline-none"
           />
+
           {errors.accountName && (
             <p className="text-[#FF717B] text-sm mt-1">{errors.accountName}</p>
           )}

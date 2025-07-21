@@ -98,11 +98,13 @@ const IfscModification = () => {
             Bank number <span className="text-[#FF717B]">*</span>
           </label>
           <input
-            type="number"
+            type="text" // change from "number" to "text" to control length properly
+            inputMode="numeric"
             value={bankNumber}
             onChange={(e) => {
-              setBankNumber(e.target.value);
-              if (e.target.value.trim()) {
+              const onlyDigits = e.target.value.replace(/\D/g, "").slice(0, 16);
+              setBankNumber(onlyDigits);
+              if (onlyDigits.trim()) {
                 setErrors((prev) => ({ ...prev, bankNumber: "" }));
               }
             }}
@@ -125,15 +127,20 @@ const IfscModification = () => {
             type="text"
             value={ifsc}
             onChange={(e) => {
-              setIfsc(e.target.value);
-              if (e.target.value.trim()) {
+              const raw = e.target.value.toUpperCase(); // optional: auto uppercase
+              const alphanumeric = raw
+                .replace(/[^a-zA-Z0-9]/g, "")
+                .slice(0, 10);
+              setIfsc(alphanumeric);
+              if (alphanumeric.trim()) {
                 setErrors((prev) => ({ ...prev, ifsc: "" }));
               }
             }}
             placeholder="Please enter IFSC"
             className="w-full px-4 py-2 rounded-md text-sm bg-white shadow-[0_2px_4px_rgba(0,0,0,0.05)] 
-              focus:outline-none focus:ring-0 focus:border-none"
+    focus:outline-none focus:ring-0 focus:border-none"
           />
+
           {errors.ifsc && (
             <p className="text-[#FF717B] text-sm mt-1">{errors.ifsc}</p>
           )}

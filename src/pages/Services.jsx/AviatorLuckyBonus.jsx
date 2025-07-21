@@ -2,10 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import apis from "../../utils/apis";
+
 
 const AviatorLuckyBonus = () => {
   const [userId, setUserId] = useState("");
   const [errors, setErrors] = useState({});
+  const user_id = localStorage.getItem("userId");
   const navigate = useNavigate();
 
   const validate = () => {
@@ -14,25 +18,38 @@ const AviatorLuckyBonus = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
 
     if (Object.keys(validationErrors).length === 0) {
       const formData = new FormData();
-      formData.append("userId", userId);
-
+      formData.append("bdg_u_id", userId);
+      formData.append("user_id", user_id);
 
       for (let pair of formData.entries()) {
         console.log(pair[0] + ": ", pair[1]);
       }
 
-      toast.success("Aviator bonus request send successfully!", {
-        position: "top-center",
-        autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
-      });
+      try{
+        const res = await axios.post(apis.aviator_lucky_bonus, formData); 
+        console.log("Response:", res.data);
+        if (res.data.status === 200) {
+          toast.success(res.data.message, {
+            position: "top-center",
+            autoClose: 2000,
+            onClose: () => navigate("/customerservices"),
+          });
+        }
+      }catch (error) {
+        console.error("Error submitting form:", error);
+        toast.error("Failed to submit request. Please try again.", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+
     }
   };
 
@@ -42,10 +59,10 @@ const AviatorLuckyBonus = () => {
         {/* User ID */}
         <div>
           <label className="block text-sm mb-2">
-            BDGWIN ID <span className="text-[#FF717B]">*</span>
+            BDG Cassino ID <span className="text-[#FF717B]">*</span>
           </label>
           <input
-            type="number"
+            type="text"
             value={userId}
             onChange={(e) => {
               setUserId(e.target.value);

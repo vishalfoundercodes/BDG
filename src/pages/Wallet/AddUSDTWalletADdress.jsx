@@ -35,6 +35,7 @@ const AddUSDTWalletADdress = () => {
 
             try {
               console.log("add usdt acount payload:",payload)
+              console.log(`usdt wallet address: ${apis.add_usdt_account}`);
                 const res = await axios.post(apis.add_usdt_account, payload);
                 if (res?.data?.status === 200) {
                     setLoading(false)

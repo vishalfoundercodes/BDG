@@ -94,6 +94,7 @@ function Withdrawal() {
             return;
         }
         try {
+          console.log(`api of payZaar bank detail: ${apis.accountView}?user_id=${userid}`);
             const res = await axios.get(`${apis.accountView}?user_id=${userid}`)
             console.log('accountview payjaar ----',res.data.data)
             if (res?.data?.status === "200"||res?.data?.status === 200) {

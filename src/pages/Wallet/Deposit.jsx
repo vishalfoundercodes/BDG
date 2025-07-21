@@ -146,27 +146,29 @@ function Deposit() {
   }, []);
   // console.log("usdtAmount",usdtAmount,upiAmount)
   const payin_deposit = async () => {
+    console.log("payin_deposit called");
     if (!userId) {
       toast.error("User not logged in");
       navigate("/login");
       return;
     }
-    if (!screenshot) {
-      toast.error("Please select a screenshot before proceeding.");
-      return;
-    }
+    // if (!screenshot) {
+    //   toast.error("Please select a screenshot before proceeding.");
+    //   return;
+    // }
     setloading(true);
     const payloadusdt = {
       user_id: userId,
-      cash: usdtAmount,
-      type: 1,
-      screenshot: screenshot,
+      amount: usdtAmount,
+      type: 1
+      // screenshot: screenshot,
     };
     const apiUsdtPay = apis.payin_deposit_usdt;
     try {
-      console.log("paaaa", payloadusdt);
+      console.log("Usdt payload", payloadusdt);
+      console.log(`Submitting USDT deposit to ${apiUsdtPay}`);
       const res = await axios.post(apiUsdtPay, payloadusdt);
-      console.log("res", res)
+      console.log("res", res.data.data);
       if (
         res?.data?.status === true ||
         res?.data?.status === "200" ||
@@ -174,6 +176,8 @@ function Deposit() {
         res?.data?.status === "SUCCESS"
       ) {
         toast.success(res?.data?.message)
+        console.log("open qr")
+        window.open(res.data.data.status_url, "_blank");
         setloading(false);
       } else {
         setloading(false);
@@ -242,7 +246,7 @@ function Deposit() {
   const getQR = async () => {
     try {
       const res = await axios.get(`${apis?.show_qr}`);
-      // console.log("qrcoe", res);
+      console.log("qrcoe", res);
       if (res?.data?.status === 200) {
         setQrcode(res?.data?.data);
       }
@@ -250,21 +254,24 @@ function Deposit() {
       if (err?.response?.data?.status === 500) {
         console.log("err", err);
       } else {
-        toast?.error(err?.response?.data?.message);
+        // toast?.error(err?.response?.data?.message);
+        console.log("err", err);
       }
     }
   };
 
   // type == 2  
   const manualPyamentHandler = async () => {
+    console.log("manualPyamentHandler called");
     const payloadManual = {
       user_id: userId,
       cash: amount,
       transaction_id: transactionId,
       screenshot: screenshot,
     };
-
+      console.log("payloadManual", payloadManual);
     try {
+      console.log("`${apis?.manual_payin}`",`${apis?.manual_payin}`)
       const res = await axios.post(`${apis?.manual_payin}`, payloadManual);
       console.log("first", res);
       if (res?.data?.status === 200) {

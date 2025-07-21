@@ -1,12 +1,16 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import apis from "../../utils/apis";
+import axios from "axios";
+
 
 const GameProblemForm = () => {
     const navigate = useNavigate();
   const [description, setDescription] = useState("");
   const [screenshot, setScreenshot] = useState(null);
   const [errors, setErrors] = useState({});
+ const user_id = localStorage.getItem("userId");
 
   const handleDescriptionChange = (e) => {
     setDescription(e.target.value);
@@ -30,7 +34,7 @@ const GameProblemForm = () => {
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit =async (e) => {
     e.preventDefault();
     const newErrors = {};
 
@@ -47,18 +51,39 @@ const GameProblemForm = () => {
     if (Object.keys(newErrors).length === 0) {
       const formData = new FormData();
       formData.append("description", description);
-      formData.append("screenshot", screenshot);
+      formData.append("image", screenshot.name);
+      formData.append("user_id", user_id);
 
       for (let pair of formData.entries()) {
         console.log(pair[0] + ": ", pair[1]);
       }
+    try{
+            const response = await axios.post(apis.game_problem, formData);
+            console.log("FormData submitted:", response);
+            console.log("FormData submitted:", response.status);
+            console.log("FormData submitted:", response.data.message);
+            if (response.status === 200) {
+        toast.success(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          onClose: () => navigate("/customerservices"),
+        });
+            }
+            else{
+              toast.error(response.data.message, {
+                position: "top-center",
+                autoClose: 2000,
+              });
+            }
+            
+            console.log("Feedback submitted successfully:", response.data);
+             
+            }
+            catch (error) {
+              console.log("Error submitting feedback:", error);
+            }
 
-      // navigate("/customerservices");
-      toast.success("Submitted successfully!", {
-        position: "top-center",
-        autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
-      });
+
     }
 
   };
@@ -155,6 +180,7 @@ const GameProblemForm = () => {
           Confirm
         </button>
       </form>
+       <ToastContainer />
     </div>
   );
 };

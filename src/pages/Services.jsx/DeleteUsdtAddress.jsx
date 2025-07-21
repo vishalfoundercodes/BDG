@@ -2,8 +2,11 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-
+import axios from "axios";
+import apis from "../../utils/apis";
+  
 const DeleteUsdtAddress = () => {
+  const user_id = localStorage.getItem("userId");
   const [images, setImages] = useState({
     selfieUsdt: null,
     selfieId: null,
@@ -27,24 +30,59 @@ const DeleteUsdtAddress = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      const formData = new FormData();
-      Object.entries(images).forEach(([key, file]) =>
-        formData.append(key, file)
-      );
+  if (Object.keys(validationErrors).length === 0) {
+    const formData = new FormData();
 
-      toast.success("Request submitted successfully!", {
+    // ✅ Add user ID from localStorage
+    formData.append("user_id", user_id);
+
+    // ✅ Append image files
+    Object.entries(images).forEach(([key, file]) => {
+      formData.append(key, file);
+    });
+
+    // ✅ Optional: For debugging
+    const formDataObject = {};
+    for (let [key, value] of formData.entries()) {
+      formDataObject[key] = value instanceof File ? value.name : value;
+    }
+
+    console.log("🧾 FormData Submitted:", formDataObject);
+
+    // ✅ Optionally make API call
+    try {
+      const response = await axios.post(apis.delete_usdt_address, formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+      console.log("Response:", response.data);
+      if (response.status === 200) {
+        toast.success(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          onClose: () => navigate("/customerservices"),
+        });
+      } else {
+        toast.error(response.data.message || "Request failed", {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error("❌ Error:", error);
+      toast.error("Something went wrong!", {
         position: "top-center",
         autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
       });
     }
-  };
+  }
+};
+
+
 
   const renderImageUpload = (label, key) => (
     <div className="mb-6 text-black">

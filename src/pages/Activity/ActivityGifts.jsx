@@ -26,6 +26,7 @@ function ActivityGifts() {
         }
         console.log('payload', payload)
         try {
+          console.log(`redeeming gift with code: ${apis.redeemGift}`);
             const res = await axios.post(apis.redeemGift, payload)
             if (res?.data?.status === 200 || res?.data?.status === "200") {
                 setLoading(false)

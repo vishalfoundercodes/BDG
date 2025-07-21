@@ -588,7 +588,7 @@ function Home() {
               {buttonData3?.slice(0, 2)?.map((item, i) => (
                 <button
                   key={i}
-                  onClick={() => navigate(item.route)}
+                  // onClick={() => navigate(item.route)}
                   className="relative flex items-center bg-gradient-to-b from-[#EDD188] to-[#C79744] rounded-xl px-3 py-2 h-[70px] shadow-md overflow-hidden"
                 >
                   {/* Icon on left center */}

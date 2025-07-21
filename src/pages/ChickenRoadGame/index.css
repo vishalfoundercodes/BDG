@@ -39,12 +39,12 @@
   --animation-bounce: bounce 1s infinite;
 }
 
-input:-webkit-autofill {
+/* input:-webkit-autofill {
   background-color: transparent !important;
-  -webkit-box-shadow: 0 0 0 1000px #042d56 inset !important; /* Your bg-boxColor */
+  -webkit-box-shadow: 0 0 0 1000px #042d56 inset !important; 
   -webkit-text-fill-color: white !important;
   transition: background-color 9999s ease-in-out 0s;
-}
+} */
 
 .scroll-container::-webkit-scrollbar {
   display: none;

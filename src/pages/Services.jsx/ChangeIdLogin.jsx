@@ -14,11 +14,15 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
+import axios from "axios";
+import "react-toastify/dist/ReactToastify.css";
+import apis from "../../utils/apis";
 
 const ChangeIdLogin = () => {
    const navigate = useNavigate();
   const [userId, setUserId] = useState("");
   const [password, setPassword] = useState("");
+  const user_id = localStorage.getItem("userId");
 
   const [depositProof, setDepositProof] = useState(null);
   const [selfiePassbook1, setSelfiePassbook1] = useState(null);
@@ -47,7 +51,7 @@ const ChangeIdLogin = () => {
     else if (userId.length > 12)
       newErrors.userId = "User ID must be max 12 characters";
 
-    if (!password.trim()) newErrors.password = "Please enter content";
+    if (!password.trim()) newErrors.password = "Please enter new password";
 
     if (!depositProof) newImageErrors.depositProof = "Please upload this image";
     if (!selfiePassbook1)
@@ -117,34 +121,56 @@ const ChangeIdLogin = () => {
     </div>
   );
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (
-      Object.keys(validationErrors).length === 0 &&
-      Object.keys(imageErrors).length === 0
-    ) {
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("password", password);
-      if (depositProof) formData.append("depositProof", depositProof);
-      if (selfiePassbook1) formData.append("selfiePassbook1", selfiePassbook1);
-      if (selfieIdCard) formData.append("selfieIdCard", selfieIdCard);
+  if (
+    Object.keys(validationErrors).length === 0 &&
+    Object.keys(imageErrors).length === 0
+  ) {
+    const formData = new FormData();
+    formData.append("user_id", user_id);
+    formData.append("password", password);
+    formData.append("bdg_win_id", userId); // if same as userId
+    formData.append("latest_deposit_receipt", depositProof);
+    formData.append("photo_selfie_hold_passbook", selfiePassbook1);
+    formData.append("photo_selfie_hold_identity_card", selfieIdCard);
 
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ": ", pair[1]);
-      }
-
-        // navigate("/customerservices");
-            toast.success("Submitted successfully!", {
-              position: "top-center",
-              autoClose: 2000,
-              onClose: () => navigate("/customerservices"),
-            });
+    // Optional: log for debug
+    for (let [key, value] of formData.entries()) {
+      console.log(`${key}:`, value);
     }
-  };
+
+    try {
+      const response = await axios.post(apis.change_login_password, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      if (response.status === 200) {
+        toast.success(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          onClose: () => navigate("/customerservices"),
+        });
+      } else {
+        toast.error(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Something went wrong!", {
+        position: "top-center",
+        autoClose: 2000,
+      });
+    }
+  }
+};
 
   return (
     <div className="min-h-screen bg-white px-4 py-6 font-sans max-w-md mx-auto text-black">
@@ -160,7 +186,7 @@ const ChangeIdLogin = () => {
               setPassword(e.target.value);
               setErrors((prev) => ({ ...prev, password: "" }));
             }}
-            placeholder="Please enter content"
+            placeholder="Please enter New Password"
             className="w-full px-4 py-2 rounded-md text-sm bg-[#f7f7f7] 
               shadow-[0_2px_4px_rgba(0,0,0,0.1)] 
               focus:outline-none focus:ring-0 focus:border-none"
@@ -172,7 +198,7 @@ const ChangeIdLogin = () => {
 
         <div>
           <label className="block text-sm  mb-2">
-            BDG WIN ID <span className="text-[#FF717B]">*</span>
+            BDG Cassino ID <span className="text-[#FF717B]">*</span>
           </label>
           <input
             type="text"

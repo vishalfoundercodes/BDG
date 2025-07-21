@@ -29,9 +29,12 @@ function Setting() {
   const userId = localStorage.getItem("userId");
   const profileDetails = async (userId) => {
     try {
+      console.log(`profile details api: ${apis.profile}${userId}`);
+      console.log(`profile details userId: ${userId}`);
       const res = await axios.get(`${apis.profile}${userId}`);
       if (res?.data?.success === 200) {
         setMyDetails(res?.data?.data)
+        console.log("myDetails", res?.data?.data);
       }
     } catch (err) {
       toast.error(err);
@@ -45,6 +48,8 @@ function Setting() {
       username: editedName,
     }
     try {
+      console.log(`update profile api: ${apis.update_profile}`);
+      console.log(`update profile payload: ${payload}`);
       const res = await axios.post(`${apis.update_profile}`, payload);
       if (res?.data?.status === 200) {
         setLoading(false)
@@ -275,7 +280,7 @@ function Setting() {
               <button
                 onClick={changeNameHandler}
                 type="submit"
-                className="mt-5 w-full font-bold py-2 rounded-full border-none bg-gradient-to-b from-customlightbtn to-customdarkBluebtn shadow-lg flex items-center justify-center"
+                className="mt-5 w-full font-bold py-2 rounded-full border-none bg-gradient-to-r from-[#EDD188] to-[#C79744] text-[#8F5206] shadow-lg flex items-center justify-center"
               >
                 Confirm
               </button>

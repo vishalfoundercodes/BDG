@@ -31,8 +31,8 @@ function BetButtonTwo({ setBtn, setBetApiHitted }) {
       setHotAirData(q);
     };
 
-    socket.on("demo_aviator", handleSocket);
-    return () => socket.off("demo_aviator", handleSocket);
+    socket.on("bdgcasino_aviator", handleSocket);
+    return () => socket.off("bdgcasino_aviator", handleSocket);
   }, []);
   // console.log("hotAirDatahotAirDatahotAirDatahotAirData",hotAirData)
   const handleIncrement = () => setBetAmount((prev) => Number(prev) + 1);

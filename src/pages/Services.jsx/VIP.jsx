@@ -63,7 +63,7 @@ function VIP() {
     }
     try {
       const res = await axios.get(`${profileApi}${userId}`);
-      // console.log("response", res)
+      console.log("response", res)
       if (res?.status === 200) {
         setMyDetails(res?.data)
       }
@@ -96,8 +96,9 @@ function VIP() {
       return;
     }
     try {
+      console.log(`Fetching VIP level history from ${apis.vipLevelHistory}${userId}`);
       const res = await axios.get(`${apis.vipLevelHistory}${userId}`);
-      // console.log("response", res)
+      console.log("response", res)
       if (res?.data?.status === 200) {
         setVipLevelHistory(res?.data?.data)
       } else {
@@ -116,10 +117,11 @@ function VIP() {
       level_id: id,
       level_up_rewards: reward
     }
-    // console.log(":level payload", payload)
+    console.log("level payload receive", payload)
     try {
+      console.log(`Adding/receive money for level up: ${apis.vipLevelAddMoney}`);
       const res = await axios.post(apis.vipLevelAddMoney, payload)
-      // console.log("level", res)
+      console.log("level benefits:", res)
       if (res?.data?.status === 200) {
         setLoading(false)
         toast.success(res?.data?.message)
@@ -139,10 +141,10 @@ function VIP() {
       level_id: id,
       monthly_rewards: reward
     }
-    // console.log(":monthly payload", payload)
+    console.log("monthly payload", payload)
     try {
       const res = await axios.post(apis.vipLevelAddMoney, payload)
-      // console.log("monthly", res)
+      console.log("monthly", res)
       if (res?.data?.status === 200) {
         setLoading(false)
         toast.success(res?.data?.message)
@@ -155,7 +157,7 @@ function VIP() {
       toast.error(err)
     }
   }
-  // console.log("vipLevelvipLevel", vipLevelHistoryData)
+  console.log("vipLevelvipLevel history", vipLevelHistoryData)
   useEffect(() => {
     if (userId) {
       profileDetails(userId);
@@ -206,7 +208,7 @@ function VIP() {
         "VIP members who have reached the corresponding level will get additional benefits on safe deposit based on the member's VIP level.",
     },
   ];
-// console.log("vipLevelData",vipLevelData)
+console.log("vipLevelData", vipLevelData);
   return (
     <>
       {loading && <Loader setLoading={setLoading} loading={loading} />}
@@ -335,7 +337,7 @@ function VIP() {
                           <div className="flex text-nowrap items-start w-full  gap-2">
                             <div>
                               <img
-                                src={item?.status === 1 ? viptop1 : viptop2}
+                                src={item?.status === "1" ? viptop1 : viptop2}
                                 className="w-6 h-6"
                                 alt="fdd"
                               />
@@ -344,13 +346,15 @@ function VIP() {
                             <div className="flex items-center gap-2">
                               <img
                                 src={
-                                  item?.status === 1 ? viptick : vipununlocked
+                                  item?.status === "1" ? viptick : vipununlocked
                                 }
                                 className="w-4 h-4"
                                 alt="fdd"
                               />
                               <p>
-                                {item?.status === 1 ? "Opened" : "Not open yet"}
+                                {item?.status === "1"
+                                  ? "Opened"
+                                  : "Not open yet"}
                               </p>
                             </div>
                           </div>
@@ -596,17 +600,26 @@ function VIP() {
                         <p className="text-xs text-white mt-2 mx-1">
                           Each account can only receive 1 time
                         </p>
-                        <button
-                          // onClick={() =>
-                          //   addMoneyLevelUpHandler(
-                          //     item?.id,
-                          //     item?.level_up_rewards
-                          //   )
-                          // }
-                          className="mt-5 bg-[#CCCEDC] text-lightGray font-bold text-xsm w-full py-1.5 rounded-full mx-1"
-                        >
-                          Received
-                        </button>
+                        {item.status === "1" ? (
+                          <button
+                            onClick={() =>
+                              addMoneyLevelUpHandler(
+                                item?.id,
+                                item?.level_up_rewards
+                              )
+                            }
+                            className="mt-5 bg-[#CCCEDC] text-lightGray font-bold text-xsm w-full py-1.5 rounded-full mx-1 hover:bg-[#b1b3c9]"
+                          >
+                            Received
+                          </button>
+                        ) : (
+                          <button
+                            disabled
+                            className="mt-5 bg-[#CCCEDC] text-lightGray font-bold text-xsm w-full py-1.5 rounded-full mx-1 hover:bg-[#b1b3c9]"
+                          >
+                            Try in Future
+                          </button>
+                        )}
                       </div>
                       <div className="w-full col-span-1 bg-[#232323]">
                         <div className="bg-gradient-to-r from-[#f95959] to-[#ff9a8e] rounded-t-lg w-full flex flex-col items-end justify-center">
@@ -646,12 +659,12 @@ function VIP() {
                           received
                         </p>
                         <button
-                          // onClick={() =>
-                          //   addMoneyMonthlyHandler(
-                          //     item?.id,
-                          //     item?.monthly_rewards
-                          //   )
-                          // }
+                          onClick={() =>
+                            addMoneyMonthlyHandler(
+                              item?.id,
+                              item?.monthly_rewards
+                            )
+                          }
                           className="mt-5 bg-[#CCCEDC] text-lightGray font-bold text-xsm w-full py-1.5 rounded-full mx-1"
                         >
                           Received

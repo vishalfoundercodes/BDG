@@ -39,6 +39,7 @@ function AllTransactionsHistory() {
       if (res?.data?.status === 200) {
         setLoading(false)
         setTransactionList(res?.data?.data)
+        console.log("transactionList", res?.data?.data)
       } else if (res?.data?.status === 400) {
         setLoading(false)
         console.log(res?.data?.message)
@@ -52,7 +53,7 @@ function AllTransactionsHistory() {
     setLoading(true)
     try {
       const res = await axios.get(`${apis.transaction_history}${userId}`)
-      // console.log("res,res", res)
+      console.log("res,res", res)
       if (res?.data?.status === 200) {
         setLoading(false)
         setTransactionHistoryData(res?.data?.data)
@@ -196,7 +197,7 @@ function AllTransactionsHistory() {
                     <span className="text-[#A8A5A1]">Balance</span>
                     <span
                       className={`font-semibold text-[12px] ${
-                        i % 2 === 0 ? "text-[#EF4444]" : "text-[#22C55E]"
+                        i % 2 === 0 ? "text-[#969390]" : "text-[#969390]"
                       }`}
                     >
                       ₹{parseFloat(item?.amount).toFixed(2)}
@@ -260,6 +261,7 @@ function AllTransactionsHistory() {
                     key={i}
                     onClick={() => {
                       handleModalFirstValue(item?.name);
+                      console.log("item?.name", item?.name);
                     }}
                     className={`w-full py-3 text-center capitalize ${
                       modalFirstValue === item?.name

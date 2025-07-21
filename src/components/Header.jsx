@@ -523,6 +523,17 @@ function Header({ audioRef, isAudioOn, setIsAudioOn }) {
           <p className="text-xs"></p>
           {/* <LanguageSelector /> */}
         </div>
+      ) : location?.pathname == "/customerservices/usdtNonIndian" ? (
+        <div className="flex px-2 items-center justify-between bg-white h-[3.22rem]">
+          <Link to={-1}>
+            <MdKeyboardArrowLeft className="font-extrabold text-4xl text-black" />
+          </Link>
+          <p className="text-[19px] text-black truncate whitespace-nowrap overflow-hidden">
+            USDT verification (non indian members)
+          </p>
+          <p className="text-xs"></p>
+          {/* <LanguageSelector /> */}
+        </div>
       ) : location?.pathname == "/customerservices/usdtIndian" ? (
         <div className="flex px-2 items-center justify-between bg-white h-[3.22rem]">
           <Link to={-1}>
@@ -562,7 +573,7 @@ function Header({ audioRef, isAudioOn, setIsAudioOn }) {
             <MdKeyboardArrowLeft className="font-extrabold text-4xl text-black" />
           </Link>
           <p className="text-[19px] text-black truncate whitespace-nowrap overflow-hidden">
-          Wingo 1 Min Win Streak Bonus
+            Wingo 1 Min Win Streak Bonus
           </p>
           <p className="text-xs"></p>
           {/* <LanguageSelector /> */}

@@ -185,6 +185,9 @@ const apis = {
   allAvatar: `${configModalUsaWin}image_all`,
   customer_service: `${configModalUsaWin}customer_service`,
   about_us: `${configModalUsaWin}about_us?type=`,
+  beginner_guide: `${configModalUsaWin}beginner_guide`,
+  announcement: `${configModalUsaWin}announcement`,
+  notification: `${configModalUsaWin}notification/`,
   newSubordinate: `${configModalUsaWin}new-subordinate?id=`,
   payModes: `${configModalUsaWin}pay_modes`,
   account_update: `${configModalUsaWin}account_update/`,
@@ -205,6 +208,20 @@ const apis = {
   update_jilli_to_user_wallet: `${configModalUsaWin}update_jilli_to_user_wallet`,
   update_spribe_wallet: `${configModalUsaWin}update_spribe_wallet`,
   update_spribe_to_user_wallet: `${configModalUsaWin}update_spribe_to_user_wallet`,
+  feedback: `${configModalUsaWin}feedback`,
+
+  // services
+  // https://bdgcassino.apponrent.com/api/change_login_password
+  // https://bdgcassino.apponrent.com/api/user-documents
+  // https://bdgcassino.apponrent.com/api/submit-old-usdt-address
+
+  ifsc_modification: `${configModalUsaWin}ifsc_modification`,
+  delete_account: `${configModalUsaWin}delete_account`,
+  bank_name_modification: `${configModalUsaWin}bank_name_modification`,
+  game_problem: `${configModalUsaWin}game_issue_report`,
+  change_login_password: `${configModalUsaWin}change_login_password`,
+  usdt_user_verification: `${configModalUsaWin}usdt-user-verification`,
+  delete_usdt_address: `${configModalUsaWin}submit-old-usdt-address`,
 };
 
 export default apis

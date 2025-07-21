@@ -48,8 +48,8 @@ function AviatorHeader({
     };
 
     // socket.on("demo_aviator", handleSocket);
-    socket.on("bigcasino_aviator", handleSocket);
-    return () => socket.off("bigcasino_aviator", handleSocket);
+    socket.on("bdgcasino_aviator", handleSocket);
+    return () => socket.off("bdgcasino_aviator", handleSocket);
   }, []);
   const [isOpen, setIsOpen] = useState(false);
   // const [isSoundOn, setIsSoundOn] = useState(true);
@@ -154,12 +154,12 @@ function AviatorHeader({
           onClick={()=>navigate("/")}
         />
         <div className="flex items-center gap-2 text-xsm relative">
-          <div
+          {/* <div
             className="flex bg-yellow rounded-full px-2 py-1 text-white cursor-pointer"
             // onClick={() => setIsModalOpen(true)}
           >
             How to play?
-          </div>
+          </div> */}
           <div className="text-green font-bold">{myDetails?.data?.wallet} </div>
           {/* Button to toggle modal */}
           <div onClick={toggleModal} className="cursor-pointer">

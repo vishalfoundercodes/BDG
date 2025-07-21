@@ -139,6 +139,17 @@ function Profile() {
         }
     };
 
+
+    const [notificationCount, setNotificationCount] = useState(0);
+
+    useEffect(() => {
+      axios
+        .get(`${apis.notification}${userId}`)
+        .then((res) => {setNotificationCount(res.data.data.length); console.log("Notification count:", res.data.data.length)})
+        .catch((err) => console.error(err));
+    }, []);
+
+
     return (
       <>
         {loading && <Loader setLoading={setLoading} loading={loading} />}
@@ -330,9 +341,12 @@ function Profile() {
                 &nbsp;Notification
               </div>
               <div className="flex items-center">
-                <div className="bg-[#D23838] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
-                  7
-                </div>
+                {notificationCount > 0 && (
+                  <div className="bg-[#D23838] text-white text-xs w-5 h-5 rounded-full flex items-center justify-center">
+                    {notificationCount}
+                  </div>
+                )}
+
                 <MdKeyboardArrowRight size={25} className="text-white" />
               </div>
             </Link>

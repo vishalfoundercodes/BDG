@@ -80,7 +80,7 @@ const WinGo = () => {
 
   useEffect(() => {
     // setEventName("demo_wingotrx");
-    setEventName("bigcasino_wingo");
+    setEventName("bdgcasino_wingo");
   }, [setEventName]);
   useEffect(() => {
     const selectedTime =

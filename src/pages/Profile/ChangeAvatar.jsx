@@ -30,6 +30,8 @@ function ChangeAvatar() {
   const AllAvatarHandler = async () => {
     setLoading(true)
     try {
+      console.log(`all avatar api: ${apis.allAvatar}`);
+      console.log(`userId: ${userId}`);
       const res = await axios.get(`${apis.allAvatar}`)
       if (res?.data?.success === "200") {
         setLoading(false)
@@ -53,6 +55,8 @@ function ChangeAvatar() {
       userimage:image
     }
     try {
+      console.log(`change avatar api: ${apis.update_profile}`);
+      console.log(`change avatar payload: ${payload}`);
       const res = await axios.post(apis.update_profile, payload)
       if (res?.data?.status === 200) {
         setLoading(false)

@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import apis from "../../utils/apis";
 
 const UsdtIndian = () => {
   const [platformName, setPlatformName] = useState("");
@@ -27,34 +29,74 @@ const UsdtIndian = () => {
 
   const validate = () => {
     const newErrors = {};
-    if (!platformName.trim()) newErrors.platformName = "Please enter content";
-    if (!walletType.trim()) newErrors.walletType = "Please enter content";
+    if (!platformName.trim()) newErrors.platformName = "Please enter plateform name";
+    if (!walletType.trim()) newErrors.walletType = "Please enter wallet type";
     Object.entries(images).forEach(([key, value]) => {
       if (!value) newErrors[key] = "Photo is required";
     });
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      const formData = new FormData();
-      formData.append("platformName", platformName);
-      formData.append("walletType", walletType);
-      Object.entries(images).forEach(([key, file]) =>
-        formData.append(key, file)
+  if (Object.keys(validationErrors).length === 0) {
+    const formData = new FormData();
+    const userId = localStorage.getItem("user_id") || "24"; // fallback
+
+    formData.append("user_id", userId);
+    formData.append("region_status", "1"); // Indian user
+    formData.append("exchange_name", platformName);
+    formData.append("wallet_type", walletType);
+
+    formData.append("screenshot_bdgwin_id", images.bdgwinId);
+    formData.append("photo_government_card", images.governmentCard);
+    formData.append("photo_deposit_proof1", images.deposit1);
+    formData.append("photo_deposit_proof2", images.deposit2);
+    formData.append("photo_usdt_bind_bdgwin", images.bindAddress);
+    formData.append("photo_new_usdt_address", images.newAddress);
+
+    if (images.adharCard) {
+      formData.append("photo_adhaar_card", images.adharCard);
+    }
+
+    try {
+      console.log(
+        `📤 Submitting USDT verification to ${apis.usdt_user_verification}`
       );
 
-      toast.success("USDT verification submitted successfully!", {
+      const response = await axios.post(apis.usdt_user_verification, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("✅ Response:", response.data);
+
+      if (response.status === 200) {
+        toast.success(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          onClose: () => navigate("/customerservices"),
+        });
+      } else {
+        toast.error(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error("❌ Error submitting form:", error);
+      toast.error("Something went wrong!", {
         position: "top-center",
         autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
       });
     }
-  };
+  }
+};
+
 
   const renderInput = (label, value, setter, errorKey) => (
     <div>
@@ -68,7 +110,7 @@ const UsdtIndian = () => {
           setter(e.target.value);
           setErrors((prev) => ({ ...prev, [errorKey]: "" }));
         }}
-        placeholder="Please enter content"
+        placeholder="Please enter detail"
         className="w-full px-4 py-2 rounded-md text-sm bg-white shadow focus:outline-none"
       />
       {errors[errorKey] && (

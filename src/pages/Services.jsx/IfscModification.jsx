@@ -2,17 +2,21 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import apis from "../../utils/apis";
+import axios from "axios";
+
 
 const IfscModification = () => {
   const [bankNumber, setBankNumber] = useState("");
   const [ifsc, setIfsc] = useState("");
   const [errors, setErrors] = useState({});
   const navigate = useNavigate();
+  const user_id = localStorage.getItem("userId");
 
   const validate = () => {
     const newErrors = {};
     if (!bankNumber.trim()) {
-      newErrors.bankNumber = "Please enter Bank Card Number";
+      newErrors.bankNumber = "Please enter Bank Number";
     }
     if (!ifsc.trim()) {
       newErrors.ifsc = "Please enter IFSC";
@@ -20,27 +24,66 @@ const IfscModification = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const validationErrors = validate();
     setErrors(validationErrors);
 
+    // if (Object.keys(validationErrors).length === 0) {
+    //   const formData = new FormData();
+    //   formData.append("bankNumber", bankNumber);
+    //   formData.append("ifsc", ifsc);
+
+    //   for (let pair of formData.entries()) {
+    //     console.log(pair[0] + ": ", pair[1]);
+    //   }
+
+    //   console.log("ifsc modification Form submitted successfully!:",formData);
+    // //   navigate("/customerservices");
+    //   toast.success("IFSC updated successfully!", {
+    //     position: "top-center",
+    //     autoClose: 2000,
+    //     onClose: () => navigate("/customerservices"),
+    //   });
+    // }
     if (Object.keys(validationErrors).length === 0) {
       const formData = new FormData();
-      formData.append("bankNumber", bankNumber);
-      formData.append("ifsc", ifsc);
+      formData.append("account_no", bankNumber);
+      formData.append("ifsc_code", ifsc);
+      formData.append("user_id", user_id);
 
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ": ", pair[1]);
+      // Log all form data in one object
+      const formObject = {};
+      for (let [key, value] of formData.entries()) {
+        formObject[key] = value;
       }
+      console.log("FormData submitted:", formObject);
 
-    //   navigate("/customerservices");
-      toast.success("IFSC updated successfully!", {
-        position: "top-center",
-        autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
-      });
+      try{
+      const response = await axios.post(apis.ifsc_modification, formObject);
+      console.log("FormData submitted:", response);
+      if (response.status === 200) {
+  toast.success(response.data.message, {
+    position: "top-center",
+    autoClose: 2000,
+    onClose: () => navigate("/customerservices"),
+  });
+      }
+      else{
+        toast.error(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+      
+      console.log("Feedback submitted successfully:", response.data);
+       
+      }
+      catch (error) {
+        console.log("Error submitting feedback:", error);
+      }
     }
+
   };
 
   return (
@@ -63,7 +106,7 @@ const IfscModification = () => {
                 setErrors((prev) => ({ ...prev, bankNumber: "" }));
               }
             }}
-            placeholder="Please enter Bank Card Number"
+            placeholder="Please enter Bank Number"
             className="w-full px-4 py-2 rounded-md text-sm bg-white shadow-[0_2px_4px_rgba(0,0,0,0.05)] 
     focus:outline-none focus:ring-0 focus:border-none"
           />

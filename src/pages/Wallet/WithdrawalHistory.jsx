@@ -12,6 +12,7 @@ import moment from "moment";
 import { PiCopyLight } from 'react-icons/pi';
 import camlenios from "../../assets/usaAsset/wallet/camlenios.png"
 import indianpay from "../../assets/usaAsset/wallet/indianpay.png"
+import payzaar from "../../assets/payzaar.png";
 import Loader from '../../reusable_component/Loader/Loader';
 
 function WithdrawalHistory() {
@@ -165,23 +166,24 @@ function WithdrawalHistory() {
         }
     }, [isOrderidCopied, setIsOrderidCopied]);
 
-    const payMethod = [{
+    const payMethod = [
+      {
         image: usdt_icon,
         name: "USDT",
-        type: 0
-    },
-    // {
-    //     image: indianpay,
-    //     name: "Indian pay",
-    //     type: 1
-    // },
+        type: 1,
+      },
+      {
+        image: payzaar,
+        name: "payzaar",
+        type: 0,
+      },
 
-    // {
-    //     image: camlenios,
-    //     name: "",
-    //     type: 2
-    // }
-    ]
+      // {
+      //     image: camlenios,
+      //     name: "",
+      //     type: 2
+      // }
+    ];
     return (
         <>
             {loading && <Loader setLoading={setLoading} loading={loading} />}

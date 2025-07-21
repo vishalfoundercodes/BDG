@@ -2,10 +2,13 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import axios from "axios";
+import apis from "../../utils/apis";
 
 const UsdtNonIndian = () => {
   const [platformName, setPlatformName] = useState("");
   const [walletType, setWalletType] = useState("");
+  const user_id = localStorage.getItem("userId");
   const [images, setImages] = useState({
     bdgwinId: null,
     governmentCard: null,
@@ -34,26 +37,81 @@ const UsdtNonIndian = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+  // usdt_user_verification;
+const handleSubmit = async(e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      const formData = new FormData();
-      formData.append("platformName", platformName);
-      formData.append("walletType", walletType);
-      Object.entries(images).forEach(([key, file]) =>
-        formData.append(key, file)
-      );
+  if (Object.keys(validationErrors).length === 0) {
+    const formData = new FormData();
 
-      toast.success("USDT verification submitted successfully!", {
+    // 🔹 Get user_id from storage or context
+    const userId = localStorage.getItem("user_id"); // or however you're managing auth
+
+    formData.append("user_id", user_id);
+    formData.append("region_status", "2"); // non-Indian
+    formData.append("wallet_type", walletType);
+    formData.append("exchange_name", platformName);
+
+    // 🔹 File mappings
+    formData.append("screenshot_bdgwin_id", images.bdgwinId);
+    formData.append("photo_government_card", images.governmentCard);
+    formData.append("photo_deposit_proof1", images.deposit1);
+    formData.append("photo_deposit_proof2", images.deposit2);
+    formData.append("photo_usdt_bind_bdgwin", images.bindAddress);
+    formData.append("photo_new_usdt_address", images.newAddress);
+
+    // OPTIONAL: If you add this upload field in UI:
+    // formData.append("photo_adhaar_card", images.adhaarCard);
+
+    // 🧾 Logging preview
+    const formDataDisplay = {};
+    for (let [key, value] of formData.entries()) {
+      formDataDisplay[key] = value instanceof File ? value.name : value;
+    }
+    console.log("Submitted FormData:", formDataDisplay);
+
+    try {
+      console.log(`Submitting USDT verification to ${apis.usdt_user_verification}`);
+        const response = await axios.post(
+          apis.usdt_user_verification,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+
+        console.log("Response:", response.data);
+          if (response.status === 200) {
+                toast.success(response.data.message, {
+                  position: "top-center",
+                  autoClose: 2000,
+                  onClose: () => navigate("/customerservices"),
+                });
+              } else {
+                toast.error(response.data.message, {
+                  position: "top-center",
+                  autoClose: 2000,
+                });
+              }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Something went wrong!", {
         position: "top-center",
         autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
       });
     }
-  };
+
+    // toast.success("USDT verification submitted successfully!", {
+    //   position: "top-center",
+    //   autoClose: 2000,
+    //   onClose: () => navigate("/customerservices"),
+    // });
+  }
+};
 
   const renderInput = (label, value, setter, errorKey) => (
     <div>
@@ -76,7 +134,7 @@ const UsdtNonIndian = () => {
     </div>
   );
 
-  const renderImageUpload = (label, key) => (
+  const renderImageUpload = (label, key) => (  
     <div className="mb-6 text-black">
       <label className="block text-sm mb-2">
         {label} <span className="text-[#FF717B]">*</span>

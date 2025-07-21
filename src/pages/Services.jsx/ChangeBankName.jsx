@@ -2,12 +2,17 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import apis from "../../utils/apis";
+import axios from "axios";
+
+
 
 const ChangeBankName = () => {
   const [userId, setUserId] = useState("");
   const [bankName, setBankName] = useState("");
   const [bankNumber, setBankNumber] = useState("");
   const [errors, setErrors] = useState({});
+  const user_id = localStorage.getItem("userId");
   const navigate = useNavigate();
 
   const validate = () => {
@@ -19,28 +24,55 @@ const ChangeBankName = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+const handleSubmit = async(e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      const formData = new FormData();
-      formData.append("userId", userId);
-      formData.append("bankName", bankName);
-      formData.append("bankNumber", bankNumber);
+  if (Object.keys(validationErrors).length === 0) {
+    const formData = new FormData();
+    formData.append("user_id", user_id);
+    formData.append("bank_name", bankName);
+    formData.append("account_no", bankNumber);
+    formData.append("user_id", user_id);
 
-      for (let pair of formData.entries()) {
-        console.log(pair[0] + ": ", pair[1]);
+    // ✅ Build object for logging
+    const formDataDisplay = {};
+    for (let [key, value] of formData.entries()) {
+      formDataDisplay[key] =
+        value instanceof File ? ` (${value.type})` : value;
+    }
+
+        try {
+      const response = await axios.post(apis.bank_name_modification,formDataDisplay);
+
+      console.log("FormData submitted:", response);
+
+      if (response.status === 200) {
+        toast.success(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          onClose: () => navigate("/customerservices"),
+        });
+      } else {
+        toast.error(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+        });
       }
-
-      toast.success("Bank name request send successfully!", {
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Something went wrong!", {
         position: "top-center",
         autoClose: 2000,
-        onClose: () => navigate("/customerservices"),
       });
     }
-  };
+
+    console.log("FormData Submitted:", formDataDisplay);
+
+  }
+};
+
 
   return (
     <div className="bg-[#f9f9ff] min-h-screen px-4 py-6 max-w-md mx-auto font-sans text-black">

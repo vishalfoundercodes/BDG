@@ -57,6 +57,7 @@ function SubordinateData() {
       return;
     }
     try {
+      console.log(`tier api: ${apis.tier}`);
       const res = await axios.get(`${apis.tier}`);
       // console.log("res1",res)
       if (res?.data?.status === 200) {
@@ -94,6 +95,7 @@ function SubordinateData() {
     const urlWithoutUid=`${apis?.subordinateData}?id=${userId}&tier=${modalFirstValue}`
     const url=`${apis?.subordinateData}?id=${userId}&tier=${modalFirstValue}&u_id=${uid}`
     try {
+      console.log(`subOrdinateData api: ${apis.subordinateData}`);
       const res = await axios.get(uid ? url : urlWithoutUid);
       console.log("res1", res);
       if (res?.status === 200) {

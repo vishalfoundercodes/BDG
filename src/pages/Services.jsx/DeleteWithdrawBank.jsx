@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import apis from "../../utils/apis";
+import axios from "axios";
+
 
 const DeleteWithdrawBank = () => {
   const [accountNumber, setAccountNumber] = useState("");
@@ -11,6 +14,8 @@ const DeleteWithdrawBank = () => {
   const [selfieImage, setSelfieImage] = useState(null);
   const [depositReceipt, setDepositReceipt] = useState(null);
   const [errors, setErrors] = useState({});
+  const user_id = localStorage.getItem("userId");
+  // console.log("User ID:", user_id);
   const navigate = useNavigate();
 
   const handleImageChange = (setter) => (e) => {
@@ -39,28 +44,110 @@ const DeleteWithdrawBank = () => {
     return newErrors;
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    const validationErrors = validate();
-    setErrors(validationErrors);
+// const handleSubmit = async(e) => {
+//   e.preventDefault();
+//   const validationErrors = validate();
+//   setErrors(validationErrors);
 
-    if (Object.keys(validationErrors).length === 0) {
-      const formData = new FormData();
-      formData.append("accountNumber", accountNumber);
-      formData.append("accountName", accountName);
-      formData.append("ifscCode", ifscCode);
-      formData.append("passbookImage", passbookImage);
-      formData.append("selfieImage", selfieImage);
-      formData.append("depositReceipt", depositReceipt);
+//   if (Object.keys(validationErrors).length === 0) {
+//     const formData = new FormData();
+//     formData.append("account_no", accountNumber);
+//     formData.append("accountName", accountName);
+//     formData.append("ifsc_code", ifscCode);
+//     formData.append("passbook_photo", passbookImage);
+//     formData.append("identity_card_photo", selfieImage);
+//     formData.append("last_deposit_proof", depositReceipt);
+//     formData.append("user_id", user_id);
 
-      toast.success("Request Submitted Successfully!", {
+
+//     // Log all FormData entries (including image files)
+//     const formObject = {};
+//     for (let [key, value] of formData.entries()) {
+//       formObject[key] =`${value.name}`
+//     }
+
+//          try{
+//       const response = await axios.post(apis.delete_account, formObject);
+//       console.log("FormData submitted:", response);
+//       if (response.status === 200) {
+//   toast.success(response.data.message, {
+//     position: "top-center",
+//     autoClose: 2000,
+//     onClose: () => navigate("/customerservices"),
+//   });
+//       }
+//       else{
+//         toast.error(response.data.message, {
+//           position: "top-center",
+//           autoClose: 2000,
+//         });
+//       }
+      
+//       console.log("Feedback submitted successfully:", response.data);
+       
+//       }
+//       catch (error) {
+//         console.log("Error submitting feedback:", error);
+//       }
+
+//     console.log("Submitted FormData:", formObject);
+
+//     toast.success("Request Submitted Successfully!", {
+//       position: "top-center",
+//       autoClose: 2000,
+//     });
+
+//     setTimeout(() => navigate("/customerservices"), 2000);
+//   }
+// };
+
+const handleSubmit = async (e) => {
+  e.preventDefault();
+  const validationErrors = validate();
+  setErrors(validationErrors);
+
+  if (Object.keys(validationErrors).length === 0) {
+    const formData = new FormData();
+    formData.append("account_no", accountNumber);
+    formData.append("accountName", accountName);
+    formData.append("ifsc_code", ifscCode);
+    formData.append("passbook_photo", passbookImage);
+    formData.append("identity_card_photo", selfieImage);
+    formData.append("last_deposit_proof", depositReceipt);
+    formData.append("user_id", user_id); // This is working
+
+    try {
+      console.log("form delete withdraw Data:", formData);
+      const response = await axios.post(apis.delete_account, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+
+      console.log("FormData submitted:", response);
+
+      if (response.status === 200) {
+        toast.success(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+          onClose: () => navigate("/customerservices"),
+        });
+      } else {
+        toast.error(response.data.message, {
+          position: "top-center",
+          autoClose: 2000,
+        });
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Something went wrong!", {
         position: "top-center",
         autoClose: 2000,
       });
-
-      setTimeout(() => navigate("/customerservices"), 2000);
     }
-  };
+  }
+};
+
 
   const renderImageUpload = (label, file, setter, errorKey) => (
     <div className="mb-6 w-full text-black">

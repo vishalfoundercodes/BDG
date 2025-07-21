@@ -30,6 +30,9 @@ function ChangePassword() {
             confirm_password: allInputs?.password_confirmation
         }
         try {
+          console.log(`change login password api: ${apis.changePassword}`);
+          console.log(`change login password payload: ${payload}`);
+
             const res = await axios.post(apis.changePassword, payload)
             console.log("res", res)
             if (res?.data?.status === "200"||res?.data?.status === 200) {
@@ -75,7 +78,7 @@ function ChangePassword() {
             <div className="flex items-center py-2 gap-2">
               <img src={password} alt="cf" className="w-6 h-6" />
               <label htmlFor="login_password" className="text-sm ">
-                Login Password
+                Login Password 
               </label>
             </div>
             <input

@@ -50,6 +50,8 @@ function PromotionHome() {
     const promotionDataHandler = async () => {
         setLoading(true)
         try {
+          console.log(`promotion data api: ${apis.promotionData}${userId}`);
+          console.log(`userId: ${userId}`);
             const res = await axios.get(`${apis?.promotionData}${userId}`)
              console.log("resooooo", res.data.referral_code);
              setinvitationCode(res.data.referral_code);
@@ -70,14 +72,15 @@ function PromotionHome() {
             promotionDataHandler()
         }
     }, [userId])
-    // console.log("object",myDetails?.data?.referral_code_url)
+    console.log("object", myDetails?.data.referral_code_url);
     const handleCopyInvitationLink = () => {
       console.log("handleCopyInvitationLink called")
         if (myDetails?.data?.u_id) {
           // const baseUrl = "https://admin.gameon.deals/";
-          const baseUrl = "https://webbdgcassio.123ace.in/"
-          // const referralLink = myDetails?.data?.referral_code_url;
-          const referralLink = `${baseUrl}register?referral=${invitationCode}`;
+          // const baseUrl = "https://webbdgcassio.123ace.in/"
+          // const baseUrl = "https://bdgcassino.apponrent.com/";
+          const referralLink = myDetails?.data?.referral_code_url;
+          // const referralLink = `${baseUrl}register?referral=${invitationCode}`;
           console.log("referralLink", referralLink);
 
           if (navigator.clipboard && navigator.clipboard.writeText) {

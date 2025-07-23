@@ -24,7 +24,7 @@ import "./PlayGame.css";
 import Notification from "./Notifiaction";
 import strip from "../assets/Game2/strip.png";
 import { toast } from "react-toastify";
-import { apis } from "../utils/apis";
+import apis  from "../../../utils/apis";
 import useApi from "../hooks/useApi";
 
 export default function PlayGame({

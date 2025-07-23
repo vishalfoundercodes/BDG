@@ -16,6 +16,8 @@ import inviteCode from "../assets/usaAsset/invitationCode.png";
 import email_tab from "../assets/usaAsset/email_tab.png";
 import { useFormik } from "formik";
 import * as Yup from "yup";
+import { useParams } from "react-router-dom";
+
 
 const register = apis?.register;
 
@@ -28,10 +30,24 @@ function Register() {
   const [loading, setLoading] = useState(false);
   const [checkAgreement, setCheckAgreement] = useState(false);
   const [passwordVisible, setPasswordVisible] = useState(false);
+  const { referralCode: referralCodeFromPath } = useParams();
+
   const navigate = useNavigate();
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+  useEffect(() => {
+    const codeFromQuery = searchParams.get("referral");
+    const code = codeFromQuery || referralCodeFromPath;
+
+    if (code) {
+      setReferralCode(code);
+      formik.setFieldValue("referral_code", code);
+    }
+
+    formik.setFieldValue("country_code", selectedCountryCode);
+  }, [searchParams, selectedCountryCode, referralCodeFromPath]);
+
   const validationSchema = Yup.object({
     mobile: Yup.string()
       .required("Phone number is required")

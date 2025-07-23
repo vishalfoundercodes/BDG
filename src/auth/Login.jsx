@@ -36,6 +36,8 @@ function Login() {
     setPasswordVisible(!passwordVisible);
   };
 
+  
+
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -47,10 +49,7 @@ function Login() {
       console.log("login response:", response);
       if (response?.data?.success === 423) {
         toast.error("Blocked by admin ");
-      }
-
- 
-      
+      } 
       else {
         localStorage.setItem("userId", userid);
         setLoading(false);
@@ -76,15 +75,21 @@ function Login() {
     setLoading(true);
     const token = generateToken();
     try {
+      // Get public IP address
+      const ipResponse = await axios.get("https://api.ipify.org?format=json");
+      const ipAddress = ipResponse.data.ip;
+      console.log("ip address:", ipAddress);
       const payload = {
         identity: !togglelogin ? formData.mobile : formData.email,
         country_code: selectedCountryCode,
         password: formData.password,
         login_token: token,
+        ip_address: ipAddress,
       };
-      console.log("payload",payload)
+
+      console.log("payload", payload);
       const response = await axios.post(loginEndpoint, payload);
-      console.log("login post resresrers",response)
+      console.log("login post resresrers", response);
       if (response?.data?.status === 200 || response?.data?.status === "200") {
         localStorage.setItem("login_token", token);
         console.log("response?.data?.id", response?.data?.id);

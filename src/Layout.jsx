@@ -29,6 +29,7 @@ const Layout = () => {
       location?.pathname === "/login" ||
       location?.pathname === "/forgotPassword" ||
       location?.pathname === "/register" ||
+      location.pathname.startsWith("/register/") ||
       location?.pathname === "/" ||
       location?.pathname === "/allFirstDepositPlans" ||
       // location?.pathname === "/lottery/wingo" ||
@@ -223,7 +224,8 @@ const Layout = () => {
               <div
                 className={`fixed z-50 ${
                   location?.pathname === "/login" ||
-                  location?.pathname === "/register"
+                  location?.pathname === "/register" ||
+                  location?.pathname === "/register/"
                     ? "hidden"
                     : "block"
                 }`}

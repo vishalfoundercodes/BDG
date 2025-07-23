@@ -26,6 +26,14 @@ const GameProblemForm = () => {
     }
   };
 
+  const getBase64 = (file) =>
+    new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.readAsDataURL(file);
+      reader.onload = () => resolve(reader.result); // base64 string
+      reader.onerror = (error) => reject(error);
+    });
+
   const handleRemoveScreenshot = () => {
     setScreenshot(null);
     setErrors((prev) => ({
@@ -37,7 +45,7 @@ const GameProblemForm = () => {
   const handleSubmit =async (e) => {
     e.preventDefault();
     const newErrors = {};
-
+const base64Image = await getBase64(screenshot);
     if (!description.trim()) {
       newErrors.description = "Please enter content";
     }
@@ -51,13 +59,14 @@ const GameProblemForm = () => {
     if (Object.keys(newErrors).length === 0) {
       const formData = new FormData();
       formData.append("description", description);
-      formData.append("image", screenshot.name);
+      formData.append("image", base64Image);
       formData.append("user_id", user_id);
 
       for (let pair of formData.entries()) {
         console.log(pair[0] + ": ", pair[1]);
       }
     try{
+       
             const response = await axios.post(apis.game_problem, formData);
             console.log("FormData submitted:", response);
             console.log("FormData submitted:", response.status);

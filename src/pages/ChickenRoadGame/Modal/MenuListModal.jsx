@@ -15,7 +15,7 @@ import { apis, referral_url } from "../utils/apis";
 import FirstWithdrawPopup from "./FirstWithdrawPopup";
 import YourDepositHistoryModal from "./YourDepositHistoryModal";
 import YourWithdrawHistoryModal from "./YourWithdrawHistoryModal"
-import Login from "../Auth/Login";
+// import Login from "../Auth/Login";
 function MenuListModal({
   isOpen,
   onClose,
@@ -61,7 +61,8 @@ function MenuListModal({
   const handleWithdraw = async () => {
     try {
       const userid = localStorage.getItem("userid");
-      const res = await get(`${apis?.profile}?id=${userid}`);
+      console.log(`profile data: ${apis?.profile}${userid}`);
+      const res = await get(`${apis?.profile}${userid}`);
       const firstRecharge = res?.data?.profile?.first_recharge;
 
       if (firstRecharge === 1 || firstRecharge === 2) {
@@ -378,7 +379,7 @@ function MenuListModal({
       {/* {showLogin && (
 
       )} */}
-      <Login isOpen={showModalLogin} onClose={() => setShowModalLogin(false)} />
+      {/* <Login isOpen={showModalLogin} onClose={() => setShowModalLogin(false)} /> */}
     </div>
   );
 }

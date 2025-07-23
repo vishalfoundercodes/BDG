@@ -6,11 +6,11 @@ import { HiBars3 } from "react-icons/hi2";
 import MenuListModal from "../Modal/MenuListModal";
 import GameRulesModal from "../Modal/GameRules";
 import BetHistory from "../Modal/BetHistory";
-import { apis } from "../utils/apis";
+import apis  from "../../../utils/apis";
 import useApi from "../hooks/useApi";
 import { currency } from "../utils/keys";
-import SignupModal from "../Auth/Register";
-import Login from "../Auth/Login"
+// import SignupModal from "../Auth/Register";
+// import Login from "../Auth/Login"
 import { useNavigate } from "react-router-dom";
 import chickenGameimage from "../assets/chicken header image.png";
 export default function GameSection({
@@ -42,7 +42,7 @@ export default function GameSection({
   );
   const betHisotry = () => {
     
-    get(`${apis?.betHisotry}${userid}&limit=10&offset=10`)
+    get(`${apis?.betHisotry}${userid}&limit=10&offset=0`)
       .then((res) => {
         console.log("response hisotry", res);
         if (res?.data?.success === true) {
@@ -55,9 +55,9 @@ export default function GameSection({
   const profileHandler = () => {
     const userid = localStorage.getItem("userId"); 
     console.log(
-      `api for  profile chicken road game:${apis?.profile}?id=${userid}`
+      `api for  profile chicken road game:${apis?.profile}${userid}`
     );
-    get(`${apis?.profile}?id=${userid}`)
+    get(`${apis?.profile}${userid}`)
       .then((res) => {
         console.log("response profile", res.data.data);
         if (res?.data?.success == 200) {
@@ -230,12 +230,12 @@ export default function GameSection({
         />
       )}
 
-      <SignupModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      {/* <SignupModal isOpen={showModal} onClose={() => setShowModal(false)} />
       <Login
         isOpen={showModalLogin}
         onClose={() => setShowModalLogin(false)}
         profileHandler={profileHandler}
-      />
+      /> */}
     </>
   );
 }

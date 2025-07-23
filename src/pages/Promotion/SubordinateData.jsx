@@ -34,21 +34,21 @@ function SubordinateData() {
   const [copyUid, setCopyUid] = useState(null);
   const userId = localStorage.getItem("userId");
   const navigate = useNavigate();
-  // const profileDetails = async () => {
-  //   if (!userId) {
-  //     toast.error("User not logged in");
-  //     navigate("/login");
-  //     return;
-  //   }
-  //   try {
-  //     const res = await axios.get(`${apis?.profile}${userId}`);
-  //     if (res?.data?.success === 200) {
-  //       setMyDetails(res?.data)
-  //     }
-  //   } catch (err) {
-  //     toast.error(err);
-  //   }
-  // };
+  const profileDetails = async () => {
+    if (!userId) {
+      toast.error("User not logged in");
+      navigate("/login");
+      return;
+    }
+    try {
+      const res = await axios.get(`${apis?.profile}${userId}`);
+      if (res?.data?.success === 200) {
+        setMyDetails(res?.data)
+      }
+    } catch (err) {
+      toast.error(err);
+    }
+  };
   const tierHandler = async () => {
     setLoading(true);
     if (!userId) {
@@ -95,6 +95,7 @@ function SubordinateData() {
     const urlWithoutUid=`${apis?.subordinateData}?id=${userId}&tier=${modalFirstValue}`
     const url=`${apis?.subordinateData}?id=${userId}&tier=${modalFirstValue}&u_id=${uid}`
     try {
+      
       console.log(`subOrdinateData api: ${apis.subordinateData}`);
       const res = await axios.get(uid ? url : urlWithoutUid);
       console.log("res1", res);
@@ -255,16 +256,16 @@ const handleCopyUID = (uid) => {
         <div className="grid grid-cols-2 w-full p-2  mt-3 text-xsm">
           <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
             <p className="text-white text-sm font-bold">
-              {suboridnateData?.number_of_deposit
-                ? suboridnateData?.number_of_deposit
+              {suboridnateData?.data.number_of_deposit
+                ? suboridnateData?.data.number_of_deposit
                 : "0"}
             </p>
             <p className="text-white">Deposit number</p>
           </div>
           <div className="col-span-1 flex flex-col items-center">
             <p className="text-white text-sm font-bold">
-              {suboridnateData?.payin_amount
-                ? Number(suboridnateData.payin_amount).toFixed(2)
+              {suboridnateData?.data.payin_amount
+                ? Number(suboridnateData.data.payin_amount).toFixed(2)
                 : "0"}
             </p>
             <p className="text-white">Deposit amount</p>
@@ -273,16 +274,16 @@ const handleCopyUID = (uid) => {
         <div className="grid grid-cols-2 w-full p-2  mt-3 text-xsm">
           <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
             <p className="text-white text-sm font-bold">
-              {suboridnateData?.number_of_bettor
-                ? Number(suboridnateData.number_of_bettor).toFixed(2)
+              {suboridnateData?.data.number_of_bettor
+                ? Number(suboridnateData.data.number_of_bettor).toFixed(2)
                 : "0"}
             </p>
             <p className="text-white">Number of bettors</p>
           </div>
           <div className="col-span-1 flex flex-col items-center">
             <p className="text-white text-sm font-bold">
-              {suboridnateData?.bet_amount
-                ? Number(suboridnateData.bet_amount).toFixed(2)
+              {suboridnateData?.data.bet_amount
+                ? Number(suboridnateData.data.bet_amount).toFixed(2)
                 : "0"}
             </p>
             <p className="text-white">Total bet</p>
@@ -291,8 +292,8 @@ const handleCopyUID = (uid) => {
         <div className="grid grid-cols-2 w-full p-2  mt-3 text-xsm">
           <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
             <p className="text-white text-sm font-bold">
-              {suboridnateData?.first_deposit
-                ? Number(suboridnateData.first_deposit).toFixed(2)
+              {suboridnateData?.data.first_deposit
+                ? Number(suboridnateData.data.first_deposit).toFixed(2)
                 : "0"}
             </p>
             <p className="text-white text-center">
@@ -301,8 +302,8 @@ const handleCopyUID = (uid) => {
           </div>
           <div className="col-span-1 flex flex-col items-center">
             <p className="text-white text-sm font-bold">
-              {suboridnateData?.first_deposit_amount
-                ? Number(suboridnateData.first_deposit_amount).toFixed(2)
+              {suboridnateData?.data.first_deposit_amount
+                ? Number(suboridnateData.data.first_deposit_amount).toFixed(2)
                 : "0"}
             </p>
             <p className="text-white">First deposit amount</p>
@@ -311,8 +312,8 @@ const handleCopyUID = (uid) => {
       </div>
 
       <div className="mt-5 text-white">
-        {suboridnateData?.subordinates_data?.length > 0 ? (
-          suboridnateData?.subordinates_data?.map((item, i) => (
+        {suboridnateData?.data.subordinates_data?.length > 0 ? (
+          suboridnateData?.data.subordinates_data?.map((item, i) => (
             <div
               key={i}
               className="bg-customdarkBlue rounded-lg py-2 px-2 mb-4"

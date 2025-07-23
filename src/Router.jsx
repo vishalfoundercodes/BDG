@@ -45,11 +45,11 @@ import RiskDisclosureAgreement from "./pages/Services.jsx/RiskDisclosureAgreemen
 import TermsCondition from "./pages/Services.jsx/TermsCondition";
 import FAQs from "./pages/Services.jsx/FAQs";
 import ChangeAvatar from "./pages/Profile/ChangeAvatar";
-import DragonTigerHome from "./pages/DragonTiger.jsx/DragonTigerHome";
-import DragonTigerSplashScreen from "./pages/DragonTiger.jsx/DragonTigerSplashScreen";
-import DragonTigerHistory from "./pages/DragonTiger.jsx/DragonTigerHistory";
-import AndarBaharHome from "./pages/AndarBahar.jsx/AndarBaharHome";
-import AndarBaharHistory from "./pages/AndarBahar.jsx/AndarBaharHistory";
+// import DragonTigerHome from "./pages/DragonTiger.jsx/DragonTigerHome";
+// import DragonTigerSplashScreen from "./pages/DragonTiger.jsx/DragonTigerSplashScreen";
+// import DragonTigerHistory from "./pages/DragonTiger.jsx/DragonTigerHistory";
+// import AndarBaharHome from "./pages/AndarBahar.jsx/AndarBaharHome";
+// import AndarBaharHistory from "./pages/AndarBahar.jsx/AndarBaharHistory";
 import ForgotPassword from "./auth/ForgotPassword";
 import SelectBank from "./pages/Wallet/SelectBank";
 import PromotionHome from "./pages/Promotion/PromotionHome";
@@ -68,28 +68,28 @@ import FirstDeposit from "./reusable_component/FirstDeposit";
 import TronscanViewer from "./pages/Lottery/TronscanViewer";
 import TronscanViewer2 from "./pages/Lottery/Transconviewer2";
 import AvitatorLayout from "./pages/AviatorGame/AvitatorLayout";
-import PlinkoHome from "./pages/plinko/PlinkoHome";
-import Mineshome from "./pages/mines/Mineshome";
-import HeadTail from "./pages/HeadTail/HeadTail";
-import KinoHome from "./pages/kino/KinoHome";
-import HeadTailHistory from "./pages/HeadTail/HeadTailHistory";
-import SpinToWheelHome from "./pages/spintowheel/SpinToWheelHome";
-import DiceHome from "./pages/Dice/DiceHome";
-import RedAndBlackhome from "./pages/Redandblack/RedAndBlackhome";
-import SevenUpDownHome from "./pages/SevenUpDown/SevenUpDownHome";
-import JhandiMundaHome from "./pages/JhandiMunda/JhandiMundaHome";
-import HiLoHome from "./pages/HiLo/HiLoHome";
-import JackpotHome from "./pages/Jackpot/JackpotHome";
-import HotAirBallon from "./pages/hotAirBalloon/HotAirBallon";
-import TeenPattiHome from "./pages/TeenPatti/TeenPattiHome";
-import MiniRouletteHome from "./pages/Miniroulette/MiniRouletteHome";
-import BCLHome from "./pages/BlockChainLottery/BCLHome";
-import TitliKabootarHome from "./pages/TitliKabootar/TitliKabootarHome";
-import Testing from "./pages/BlockChainLottery/testing";
-import Lucky12home from "./pages/Lucky12/Lucky12home";
-import Lucky16home from "./pages/Lucky16/Lucky16home";
-import FunTarget from "./pages/FunTarget/FunTarget";
-import TripleChancehome from "./pages/TripleChance/TripleChancehome";
+// import PlinkoHome from "./pages/plinko/PlinkoHome";
+// import Mineshome from "./pages/mines/Mineshome";
+// import HeadTail from "./pages/HeadTail/HeadTail";
+// import KinoHome from "./pages/kino/KinoHome";
+// import HeadTailHistory from "./pages/HeadTail/HeadTailHistory";
+// import SpinToWheelHome from "./pages/spintowheel/SpinToWheelHome";
+// import DiceHome from "./pages/Dice/DiceHome";
+// import RedAndBlackhome from "./pages/Redandblack/RedAndBlackhome";
+// import SevenUpDownHome from "./pages/SevenUpDown/SevenUpDownHome";
+// import JhandiMundaHome from "./pages/JhandiMunda/JhandiMundaHome";
+// import HiLoHome from "./pages/HiLo/HiLoHome";
+// import JackpotHome from "./pages/Jackpot/JackpotHome";
+// import HotAirBallon from "./pages/hotAirBalloon/HotAirBallon";
+// import TeenPattiHome from "./pages/TeenPatti/TeenPattiHome";
+// import MiniRouletteHome from "./pages/Miniroulette/MiniRouletteHome";
+// import BCLHome from "./pages/BlockChainLottery/BCLHome";
+// import TitliKabootarHome from "./pages/TitliKabootar/TitliKabootarHome";
+// import Testing from "./pages/BlockChainLottery/testing";
+// import Lucky12home from "./pages/Lucky12/Lucky12home";
+// import Lucky16home from "./pages/Lucky16/Lucky16home";
+// import FunTarget from "./pages/FunTarget/FunTarget";
+// import TripleChancehome from "./pages/TripleChance/TripleChancehome";
 import ChickenRoadGame from "./pages/ChickenRoadGame/GameComponent/Game";
 import ChickenRoadLayout from "./pages/ChickenRoadGame/GameComponent/ChickenRoadLayout";
 import ShowBankDetails from "./pages/Wallet/ShowBankDetails";
@@ -116,6 +116,10 @@ export const Router = createBrowserRouter([
       },
       {
         path: "/register",
+        element: <Register />,
+      },
+      {
+        path: "/register/:referralCode?",
         element: <Register />,
       },
       {
@@ -164,26 +168,26 @@ export const Router = createBrowserRouter([
         path: "/comingsoon",
         element: <ComingSoon />,
       },
-      {
-        path: "/dragonSplash",
-        element: <DragonTigerSplashScreen />,
-      },
-      {
-        path: "/dragonTiger",
-        element: <DragonTigerHome />,
-      },
-      {
-        path: "/dragonTiger/history",
-        element: <DragonTigerHistory />,
-      },
-      {
-        path: "/andarbahar",
-        element: <AndarBaharHome />,
-      },
-      {
-        path: "/andarbahar/history",
-        element: <AndarBaharHistory />,
-      },
+      // {
+      //   path: "/dragonSplash",
+      //   element: <DragonTigerSplashScreen />,
+      // },
+      // {
+      //   path: "/dragonTiger",
+      //   element: <DragonTigerHome />,
+      // },
+      // {
+      //   path: "/dragonTiger/history",
+      //   element: <DragonTigerHistory />,
+      // },
+      // {
+      //   path: "/andarbahar",
+      //   element: <AndarBaharHome />,
+      // },
+      // {
+      //   path: "/andarbahar/history",
+      //   element: <AndarBaharHistory />,
+      // },
       {
         path: "/lottery/wingo",
         element: <WinGo />,
@@ -444,98 +448,98 @@ export const Router = createBrowserRouter([
         path: "/aboutus/faqs",
         element: <FAQs />,
       },
-      {
-        path: "/plinko",
-        element: <PlinkoHome />,
-      },
-      {
-        path: "/mines",
-        element: <Mineshome />,
-      },
-      {
-        path: "/headsntails",
-        element: <HeadTail />,
-      },
-      {
-        path: "/headsntails/history",
-        element: <HeadTailHistory />,
-      },
-      {
-        path: "/keno",
-        element: <KinoHome />,
-      },
-      {
-        path: "/spintowheel",
-        element: <SpinToWheelHome />,
-      },
-      {
-        path: "/dice",
-        element: <DiceHome />,
-      },
-      {
-        path: "/rednblack",
-        element: <RedAndBlackhome />,
-      },
-      {
-        path: "/sevenupdown",
-        element: <SevenUpDownHome />,
-      },
-      {
-        path: "/jhandimunda",
-        element: <JhandiMundaHome />,
-      },
-      {
-        path: "/hilo",
-        element: <HiLoHome />,
-      },
-      {
-        path: "/jackpot",
-        element: <JackpotHome />,
-      },
-      {
-        path: "/hotairballon",
-        element: <HotAirBallon />,
-      },
-      {
-        path: "/miniroulette",
-        element: <MiniRouletteHome />,
-      },
-      {
-        path: "/teenpatti",
-        element: <TeenPattiHome />,
-      },
-      {
-        path: "/gameonlottery",
-        element: <BCLHome />,
-      },
-      {
-        path: "/titli",
-        element: <TitliKabootarHome />,
-      },
-      {
-        path: "/lucky12",
-        element: <Lucky12home />,
-      },
-      {
-        path: "/lucky16",
-        element: <Lucky16home />,
-      },
-      {
-        path: "/funtarget",
-        element: <FunTarget />,
-      },
-      {
-        path: "/triplechance",
-        element: <TripleChancehome />,
-      },
+      // {
+      //   path: "/plinko",
+      //   element: <PlinkoHome />,
+      // },
+      // {
+      //   path: "/mines",
+      //   element: <Mineshome />,
+      // },
+      // {
+      //   path: "/headsntails",
+      //   element: <HeadTail />,
+      // },
+      // {
+      //   path: "/headsntails/history",
+      //   element: <HeadTailHistory />,
+      // },
+      // {
+      //   path: "/keno",
+      //   element: <KinoHome />,
+      // },
+      // {
+      //   path: "/spintowheel",
+      //   element: <SpinToWheelHome />,
+      // },
+      // {
+      //   path: "/dice",
+      //   element: <DiceHome />,
+      // },
+      // {
+      //   path: "/rednblack",
+      //   element: <RedAndBlackhome />,
+      // },
+      // {
+      //   path: "/sevenupdown",
+      //   element: <SevenUpDownHome />,
+      // },
+      // {
+      //   path: "/jhandimunda",
+      //   element: <JhandiMundaHome />,
+      // },
+      // {
+      //   path: "/hilo",
+      //   element: <HiLoHome />,
+      // },
+      // {
+      //   path: "/jackpot",
+      //   element: <JackpotHome />,
+      // },
+      // {
+      //   path: "/hotairballon",
+      //   element: <HotAirBallon />,
+      // },
+      // {
+      //   path: "/miniroulette",
+      //   element: <MiniRouletteHome />,
+      // },
+      // {
+      //   path: "/teenpatti",
+      //   element: <TeenPattiHome />,
+      // },
+      // {
+      //   path: "/gameonlottery",
+      //   element: <BCLHome />,
+      // },
+      // {
+      //   path: "/titli",
+      //   element: <TitliKabootarHome />,
+      // },
+      // {
+      //   path: "/lucky12",
+      //   element: <Lucky12home />,
+      // },
+      // {
+      //   path: "/lucky16",
+      //   element: <Lucky16home />,
+      // },
+      // {
+      //   path: "/funtarget",
+      //   element: <FunTarget />,
+      // },
+      // {
+      //   path: "/triplechance",
+      //   element: <TripleChancehome />,
+      // },
       {
         path: "/chickenRoadGame",
         element: <ChickenRoadLayout />,
       },
-      {
-        path: "/test",
-        element: <Testing />,
-      },
+      // {
+      //   path: "/test",
+      //   element: <Testing />,
+      // },
     ],
   },
 ]);

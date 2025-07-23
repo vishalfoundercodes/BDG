@@ -16,10 +16,10 @@ import goldEgg from "../assets/Game2/light-bask.png";
 import chicken_dead_voice from "../assets/music/chicken_dead_voice.mp3";
 import bg_music from "../assets/music/bg_music.mp3";
 import useApi from "../hooks/useApi";
-import { apis } from "../utils/apis";
+import apis  from "../../../utils/apis";
 import { toast } from "react-toastify";
 import WinAmountModal from "../Modal/WinAmount";
-import Login from "../Auth/Login"
+// import Login from "../Auth/Login"
 import LoadingPage from  "./LoadingPage"
 
 export default function Game() {
@@ -343,7 +343,7 @@ export default function Game() {
           onClose={() => setShowWinModal(false)}
         />
       )}
-      <Login isOpen={showModalLogin} onClose={() => setShowModalLogin(false)} />
+      {/* <Login isOpen={showModalLogin} onClose={() => setShowModalLogin(false)} /> */}
     </div>
   );
 }

@@ -41,12 +41,12 @@ const BetHistory = ({ title, data, onClose, onLoadMore }) => {
               <div className="flex items-center space-x-1 text-[12px]">
                 <>
                   {item.win_amount > 0 && currency}
-                  <span>{item.win_amount ? item.win_amount : "--"}</span>
+                  <span>
+                    {item.win_amount ? item.win_amount : item.win_amount}
+                  </span>
                 </>
 
-                <FaCheckCircle
-                  className="text-[#4ADE80] ml-auto"
-                />
+                <FaCheckCircle className="text-[#4ADE80] ml-auto" />
               </div>
             </div>
           ))}

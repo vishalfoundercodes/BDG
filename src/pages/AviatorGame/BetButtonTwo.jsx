@@ -13,7 +13,7 @@ import { useProfile } from "../../reusable_component/gameApi";
 
 function BetButtonTwo({ setBtn, setBetApiHitted }) {
   const userId = localStorage.getItem("userId");
-  const [betAmount, setBetAmount] = useState(0.1);
+  const [betAmount, setBetAmount] = useState(1);
   const [betStatus, setBetStatus] = useState(false);
   // const [betAmount2, setBetAmount2] = useState(10);
   const [isAuto, setIsAuto] = useState(false);

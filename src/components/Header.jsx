@@ -684,7 +684,8 @@ function Header({ audioRef, isAudioOn, setIsAudioOn }) {
           <p className="text-sm"></p>
         </div>
       ) : location?.pathname === "/register" ||
-        location?.pathname === "/login" ? (
+        location?.pathname === "/login" ||
+        location.pathname.startsWith("/register/") ? (
         <div className="bg-gradient-to-l from-red to-redLight px-1 pt-2 sm:pt-2 md:pt-2 pb-2 sm:pb-1 md:pb-2 flex justify-between items-center">
           <Link to={-1}>
             <MdKeyboardArrowLeft className="font-extrabold text-4xl text-white" />

@@ -1,6 +1,6 @@
 import React from "react";
 import { FaHome, FaPlay, FaEye, FaExpand, FaTimes } from "react-icons/fa";
-import SignupModal from "../Auth/Signup";
+// import SignupModal from "../Auth/Signup";
 
 export default function GameHeader() {
   const [showModal, setShowModal] = useState(false);
@@ -58,7 +58,7 @@ export default function GameHeader() {
         </div>
       </div>
       {/* Modals */}
-      <SignupModal isOpen={showModal} onClose={() => setShowModal(false)} />
+      {/* <SignupModal isOpen={showModal} onClose={() => setShowModal(false)} /> */}
       {/* <Login isOpen={showModalLogin} onClose={() => setShowModalLogin(false)} /> */}
     </div>
   );

@@ -275,7 +275,7 @@ const handleCopyUID = (uid) => {
           <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
             <p className="text-white text-sm font-bold">
               {suboridnateData?.data.number_of_bettor
-                ? Number(suboridnateData.data.number_of_bettor).toFixed(2)
+                ? Number(suboridnateData.data.number_of_bettor)
                 : "0"}
             </p>
             <p className="text-white">Number of bettors</p>
@@ -293,7 +293,7 @@ const handleCopyUID = (uid) => {
           <div className="col-span-1 flex flex-col items-center border-r-[1px] border-lightGray">
             <p className="text-white text-sm font-bold">
               {suboridnateData?.data.first_deposit
-                ? Number(suboridnateData.data.first_deposit).toFixed(2)
+                ? Number(suboridnateData.data.first_deposit)
                 : "0"}
             </p>
             <p className="text-white text-center">
@@ -303,9 +303,14 @@ const handleCopyUID = (uid) => {
           <div className="col-span-1 flex flex-col items-center">
             <p className="text-white text-sm font-bold">
               {suboridnateData?.data.first_deposit_amount
-                ? Number(suboridnateData.data.first_deposit_amount).toFixed(2)
+                ? Number.isInteger(
+                    Number(suboridnateData.data.first_deposit_amount)
+                  )
+                  ? Number(suboridnateData.data.first_deposit_amount)
+                  : Number(suboridnateData.data.first_deposit_amount).toFixed(2)
                 : "0"}
             </p>
+
             <p className="text-white">First deposit amount</p>
           </div>
         </div>

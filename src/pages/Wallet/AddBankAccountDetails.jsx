@@ -63,6 +63,7 @@ const AddBankAccountDetails = () => {
         try {
           console.log(`Submitting bank account details to ${apis.addAccount}`);
             const res = await axios.post(apis?.addAccount, payload);
+            console.log(res);
             if (res.data?.status === "200"||res.data?.status === 200) {
                 setLoading(false)
                 toast.success(res?.data?.message);

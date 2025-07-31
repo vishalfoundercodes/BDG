@@ -192,7 +192,7 @@ function PromotionHome() {
             />
           </div>
         )}
-        <div className="bg-  h-full w-full overflow-y-auto mb-24">
+        <div className="bg-  h-full w-full overflow-y-auto mb-24 hide-scrollbar">
           <div
             className="w-full flex flex-col px-3 items-center bg-[#DEBB6F] h-64 bg-center bg-cover"
             style={{
@@ -376,7 +376,10 @@ function PromotionHome() {
               </div>
             </Link>
             <div className="w-full flex items-center justify-between mt-2 bg-customdarkBlue p-4 rounded-md">
-              <div className="flex items-center gap-2 text-white">
+              <div
+                className="flex items-center gap-2 text-white"
+                onClick={() => navigate("/customerservices")}
+              >
                 <img className="w-9 h-9" src={customer} alt="ds" />
                 <p>Agent line customer service</p>
               </div>
@@ -423,7 +426,7 @@ function PromotionHome() {
                 <div className="col-span-1 flex flex-col items-center border-r-[1px] border-border1">
                   <p className="text-white text-sm">
                     {promotionData?.direct_subordinate
-                      ? Number(promotionData.direct_subordinate).toFixed(2)
+                      ? Number(promotionData.direct_subordinate)
                       : "0"}
                   </p>
                   <p className="text-white"> direct subordinates</p>
@@ -431,7 +434,7 @@ function PromotionHome() {
                 <div className="col-span-1 flex flex-col items-center">
                   <p className="text-white text-sm">
                     {promotionData?.team_subordinate
-                      ? Number(promotionData.team_subordinate).toFixed(2)
+                      ? Number(promotionData.team_subordinate)
                       : "0"}
                   </p>
                   <p className="text-white text-center">

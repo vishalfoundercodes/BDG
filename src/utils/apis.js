@@ -6,23 +6,31 @@
 // https://bdgcassino.apponrent.com/api/profile?id=1
 
 // export const baseUrlUsaWin = "https://bigcashino.123ace.in";
-export const baseUrlUsaWin = "https://bdgcassino.apponrent.com";
+// https://root.bdgcassino.com/api/profile?id=1 
+export const baseUrlUsaWin = "https://root.bdgcassino.com";
 export const configModalUsaWin = `${baseUrlUsaWin}/api/`
 
-export const referral_url = "https://bdgcassino.apponrent.com";
+export const referral_url = "https://root.bdgcassino.com";
 // export const configModalUsaWin = `${baseUrlUsaWin}/api/`;
 export const configModalApk = `${baseUrlUsaWin}/apk/`;
 export const configModalBanner = `${baseUrlUsaWin}/public/api/`;
 
 const apis = {
-  sendOtp: "https://otp.fctechteam.org/send_otp.php?mode=live&digit=4&mobile=",
-  verifyOtp: "https://otp.fctechteam.org/verifyotp.php",
+  sendOtp: "https://otp.fctechteam.org/send_otp.php?mode=test&digit=6&mobile=",
+  verifyOtp: "https://otp.fctechteam.org/verifyotp.php?mobile=",
+
+  // var sendUrl = 'https://otp.fctechteam.org/send_otp.php?mode=live&digit=4&mobile=' + mobileNumber;
+  // var verifyUrl = 'https://otp.fctechteam.org/verifyotp.php?mobile=' + mobileNumber + '&otp=' + otp;
+
   createUserId: `${configModalUsaWin}otp-register`,
   register: `${configModalUsaWin}register`,
   login: `${configModalUsaWin}login`,
   profile: `${configModalUsaWin}profile?id=`,
   changePassword: `${configModalUsaWin}changePassword`,
   fundTransfer: `${configModalUsaWin}main_wallet_transfers`,
+
+  // https://root.bdgcassino.com/api/forget_reset_password
+  forget_password: `${configModalUsaWin}forget_reset_password`,
 
   //spin to wheel game urls
   spin_bet: `${configModalUsaWin}spin/bet`,
@@ -153,30 +161,33 @@ const apis = {
   titli_result: `${configModalUsaWin}titli_result`,
 
   //chicken road game
-    chickenMultplier: `${configModalUsaWin}multiplier`,
-    chickenCashout: `${configModalUsaWin}cashout`,
-    chickenbet: `${configModalUsaWin}bet`,
-    login: `${configModalUsaWin}login`,
-    register: `${configModalUsaWin}register`,
-    // profile: `${configModalUsaWin}profile`,
-    updateProfile: `${configModalUsaWin}update_profile`,
-    betHisotry: `${configModalUsaWin}history?user_id=`,
-    getPaymentMethod: `${configModalUsaWin}adminMethodPayment?type=`,
-    add_amount: `${configModalUsaWin}add_amount`,
-    withdrawal_request: `${configModalUsaWin}withdrawal_request`,
-    avatar_request: `${configModalUsaWin}avatar_list`,
-    avatarUpdate_request: `${configModalUsaWin}update_avatar?user_id=`,
-    gameRule_request: `${configModalUsaWin}getGameRules`,
-    deposit_history: `${configModalUsaWin}payinHistory?user_id=`,
-    withdraw_history: `${configModalUsaWin}withdrawHistory?user_id=`,
-    download_apk: `${configModalApk}chickenroad.apk`,
-    banner_image: `${configModalBanner}getBanners`,
-    bet_value: `${configModalBanner}bet_values`,
+  chickenMultplier: `${configModalUsaWin}multiplier`,
+  chickenCashout: `${configModalUsaWin}cashout`,
+  chickenbet: `${configModalUsaWin}bet`,
+  login: `${configModalUsaWin}login`,
+  register: `${configModalUsaWin}register`,
+  // profile: `${configModalUsaWin}profile`,
+  updateProfile: `${configModalUsaWin}update_profile`,
+  betHisotry: `${configModalUsaWin}history?user_id=`,
+  getPaymentMethod: `${configModalUsaWin}adminMethodPayment?type=`,
+  add_amount: `${configModalUsaWin}add_amount`,
+  withdrawal_request: `${configModalUsaWin}withdrawal_request`,
+  avatar_request: `${configModalUsaWin}avatar_list`,
+  avatarUpdate_request: `${configModalUsaWin}update_avatar?user_id=`,
+  gameRule_request: `${configModalUsaWin}getGameRules`,
+  deposit_history: `${configModalUsaWin}payinHistory?user_id=`,
+  withdraw_history: `${configModalUsaWin}withdrawHistory?user_id=`,
+  download_apk: `${configModalApk}chickenroad.apk`,
+  banner_image: `${configModalBanner}getBanners`,
+  bet_value: `${configModalBanner}bet_values`,
 
   // general apis
   payin_deposit: `${configModalUsaWin}payzaaar`,
   show_qr: `${configModalUsaWin}show_qr`,
   payin_deposit_usdt: `${configModalUsaWin}usdt_payin`,
+  payin_deposit_indianPay: `${configModalUsaWin}payin`,
+  // https://bdgcassino.apponrent.com/api/payin
+
   payin_deposit_camlenio: `${configModalUsaWin}camlenio?user_id=`,
   depositHistory: `${configModalUsaWin}deposit_history`,
   addAccount: `${configModalUsaWin}add_account`,

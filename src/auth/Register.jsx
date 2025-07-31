@@ -149,6 +149,9 @@ function Register() {
   const naivatorhandle = () => {
     localStorage.setItem("abousType", "6");
   };
+
+
+
   return (
     <>
       {loading && <Loader setLoading={setLoading} loading={loading} />}
@@ -225,13 +228,18 @@ function Register() {
                     {...formik.getFieldProps("mobile")}
                     type="text"
                     name="mobile"
+                    // disabled={otpbuttondisable}
                     placeholder="Enter your phone number"
-                    className="col-span-[60%] bg-customdarkBlue  text-[14px] focus:border-[1px] border-customlightBlue rounded-md outline-none w-full pl-3 p-3 placeholder:text-gray text-white"
+                    className="col-span-[60%] bg-customdarkBlue text-[14px] focus:border-[1px] border-customlightBlue rounded-md outline-none w-full pl-3 p-3 placeholder:text-gray text-white"
                     onInput={(e) => {
-                      e.target.value = e.target.value
+                      const value = e.target.value
                         .replace(/[^0-9]/g, "")
                         .slice(0, 10);
-                      formik.setFieldValue("mobile", e.target.value);
+                      e.target.value = value;
+                      formik.setFieldValue("mobile", value);
+
+                      // ✅ Trigger OTP only if number is complete (10 digits) and different from the last sent
+                    
                     }}
                   />
                 </div>
@@ -241,6 +249,8 @@ function Register() {
                   </div>
                 )}
               </div>
+              {/* otp input */}
+            
 
               <div className="">
                 <div className="flex items-center gap-2 py-2">
@@ -260,6 +270,7 @@ function Register() {
                   type="email"
                   name="email"
                   id="email"
+                  // disabled={!otpbuttondisable}
                   placeholder="Please enter the Email"
                   className="bg-customdarkBlue mt-2 border-[1px] border-transparent focus:border-customlightBlue text-[14px] rounded-md outline-none w-full pl-3 p-3 placeholder:text-gray text-white transition-all duration-200 ease-in-out"
                   onKeyDown={(e) => {
@@ -279,7 +290,6 @@ function Register() {
                   }}
                 />
               </div>
-
               <div className="relative">
                 <div className="flex items-center py-2 gap-2">
                   <div>
@@ -297,6 +307,7 @@ function Register() {
                   type={passwordVisible ? "text" : "password"}
                   name="password"
                   id="password"
+                  // disabled={!otpbuttondisable}
                   placeholder="Password"
                   className="bg-customdarkBlue mt-2 border-[1px] border-transparent focus:border-customlightBlue text-[14px] rounded-md outline-none w-full pl-3 p-3 placeholder:text-gray text-white transition-all duration-200 ease-in-out"
                   minLength={8}
@@ -374,6 +385,7 @@ function Register() {
                   type={passwordVisible ? "text" : "password"}
                   name="password_confirmation"
                   id="password_confirmation"
+                  // disabled={!otpbuttondisable}
                   placeholder="Confirm Password"
                   className="bg-customdarkBlue mt-2 border-[1px] border-transparent focus:border-customlightBlue text-[14px] rounded-md outline-none w-full pl-3 p-3 placeholder:text-gray text-white transition-all duration-200 ease-in-out"
                   minLength={8}
@@ -457,7 +469,6 @@ function Register() {
                   className="bg-customdarkBlue mt-2 border-[1px] border-transparent focus:border-customlightBlue text-[14px] rounded-md outline-none w-full pl-3 p-3 placeholder:text-gray text-white transition-all duration-200 ease-in-out"
                 />
               </div>
-
               <div className="flex items-center mt-4">
                 <div
                   onClick={() => setCheckAgreement(!checkAgreement)}
@@ -487,7 +498,6 @@ function Register() {
                   【Privacy Agreement】
                 </a>
               </div>
-
               <div className="flex flex-col w-full font-bold items-center justify-center">
                 <button
                   type="submit"

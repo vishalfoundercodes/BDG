@@ -42,9 +42,9 @@ const wingo_game_history = apis.wingo_game_history
 const wingo_win_amount_announcement = apis.wingo_win_amount_announcement
 const images = [zero, one, two, three, four, five, six, seven, eight, nine];
 const notes = [
-  "Notice:To visit our official website, be sure to use the link below,https://gameon.deals / Please re",
-  "Notice:To visit our official website, be sure to use the link below,https://gameon.deals / Please re",
-  "Notice:To visit our official website, be sure to use the link below,https://gameon.deals / Please re",
+  "Notice:To visit our official website, be sure to use the link below,https://bdgcassino.com / Please re",
+  "Notice:To visit our official website, be sure to use the link below,https://bdgcassino.com / Please re",
+  "Notice:To visit our official website, be sure to use the link below,https://bdgcassino.com / Please re",
 ];
 const WinGo = () => {
   const [myDetails, setMyDetails] = useState(null)
@@ -252,12 +252,12 @@ const WinGo = () => {
       );
       // console.log("resres url url", `${wingo_win_amount_announcement}?userid=${userId}&game_id=${i}&games_no=${res?.data?.data[0]?.games_no}`)
 
-      // console.log("resres hai hai 3030", res?.data?.data)
+      console.log("resres hai hai 3030", res?.data?.data)
       if (res?.data?.status === 200) {
-        // console.log("one one noe ", `${wingo_win_amount_announcement}?userid=${userId}&game_id=${i}&games_no=${res?.data?.data[0]?.games_no}`)
+        console.log("wingo win announcement api: ", `${wingo_win_amount_announcement}?userid=${userId}&game_id=${i}&games_no=${res?.data?.data[0]?.games_no}`)
         try {
           const resp = await axios.get(`${wingo_win_amount_announcement}?userid=${userId}&game_id=${i}&games_no=${res?.data?.data[0]?.games_no}`)
-          // console.log("resp 3030", resp)
+          console.log("wingo win announcement res:", resp);
           if (resp?.data?.status === 200) {
             // console.log("res 1", resp)
             // toast.success(`You ${resp?.data?.data?.result} ${resp?.data?.data?.win} for 30s`)
@@ -366,7 +366,9 @@ const WinGo = () => {
       offset
     }
     try {
+      console.log(`my history api : ${wingo_my_history}`)
       const res = await axios.post(`${wingo_my_history}`, payload)
+      console.log("my history:",res)
       if (res?.status === 200) {
         setMyHistoryData(res?.data)
         if (res?.data?.data?.length < limit) {
@@ -385,9 +387,13 @@ const WinGo = () => {
     setIsLoading(true);
     try {
       const offset = (currentPage - 1) * limit;
+      //  console.log(
+      //    `result api:${wingo_game_history}?game_id=${gameDetails?.gameId}&limit=${limit}&offset=${offset}`
+      //  );
       const res = await axios.get(
         `${wingo_game_history}?game_id=${gameDetails?.gameId}&limit=${limit}&offset=${offset}`
       );
+      // console.log(`result res:`,res)
       if (res?.data?.status === 200) {
         setGameHistoryData(res?.data?.data);
         setGameHistoryDataPagination(res?.data);

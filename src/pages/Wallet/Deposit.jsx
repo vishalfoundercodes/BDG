@@ -1,7 +1,7 @@
 import { HiArrowPathRoundedSquare } from "react-icons/hi2";
 import payzaar from "../../assets/payzaar.png";
 import depo_wallet from "../../assets/icons/depo_wallet.png";
-
+import indianpaylogo from "../../assets/images/indianpaylogo.png";
 import usdt_icon from "../../assets/images/usdt_icon.png";
 import { useEffect, useState } from "react";
 import { RxCrossCircled } from "react-icons/rx";
@@ -224,9 +224,14 @@ function Deposit() {
   };
 
   const payMethod = [
+    // {
+    //   image: payzaar,
+    //   name: "Payzaarpay",
+    //   type: 0,
+    // },
     {
-      image: payzaar,
-      name: "Payzaarpay",
+      image: indianpaylogo,
+      name: "Indian Pay",
       type: 0,
     },
     {
@@ -296,46 +301,45 @@ function Deposit() {
     const payload = {
       user_id: userId,
       cash: upiAmount,
-      type: "0",
+      type: "2",
     };
-    console.log("PAYLOAD  PAYJAAR", payload);
-    try {
-      console.log("`${apis?.payin_deposit}`",`${apis?.payin_deposit}`)
-      const res = await axios.post(`${apis?.payin_deposit}`, payload);
-      console.log("payjarPayinHandler response", res);
-      if (res?.data?.status === 200 && res?.data?.data?.status === "success") {
-        // toast?.success(res?.data?.message);
-        if (
-          upiAmount >= paymenLimts?.INR_minimum_deposit &&
-          upiAmount <= paymenLimts?.INR_maximum_deposit
-        ) {
-          const link = res?.data?.data?.Qr_Link;
-          const paymentlink = res?.data?.data?.paymentlink;
-          const screenWidth = window.innerWidth;
-          if (screenWidth >= 1024) {
-            // Desktop – open QR in new tab
-            window.open(link, "_blank");
-          } else {
-            // Mobile – use href to trigger UPI apps
-            if (paymentlink?.startsWith("upi://")) {
-              window.location.href = paymentlink;
-            } else {
-              // fallback for non-UPI links
-              window.open(paymentlink, "_blank");
-            }
-          }
-        }
-      }
-      setloading(false);
-    } catch (err) {
-      setloading(false);
-        console.log(" payzaar", err);
-      if (err?.response?.data?.status === 500) {
-        console.log("err", err);
-      } else {
-        toast?.error(err?.response?.data?.message);
-      }
-    }
+    console.log("PAYLOAD  indian pay", payload);
+try {
+  const res = await axios.post(`${apis?.payin_deposit_indianPay}`, payload);
+  console.log("payjarIndianPayHandler response", res);
+
+  // ✅ If response is HTML (demo account case)
+  if (
+    res?.status === 200 &&
+    typeof res?.data === "string" &&
+    res?.data.includes("<html")
+  ) {
+    // Open the HTML in a new tab
+    const newWindow = window.open();
+    newWindow.document.write(res.data);
+    newWindow.document.close();
+    setloading(false);
+    return;
+  }
+
+  // ✅ Normal success case with JSON response
+  if (res?.status === 200 && res?.data?.status === "SUCCESS") {
+    toast?.success(res?.data?.message);
+    const link = res?.data?.payment_link;
+    window.open(link, "_blank");
+  }
+
+  setloading(false);
+} catch (err) {
+  setloading(false);
+  console.log("payzaar error", err);
+  if (err?.response?.data?.status === 500) {
+    console.log("err", err);
+  } else {
+    toast?.error(err?.response?.data?.message);
+  }
+}
+
   };
   // console.log("patymewntre", paymenLimts)
 

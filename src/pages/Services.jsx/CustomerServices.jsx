@@ -219,7 +219,7 @@ function CustomerServices() {
           },
           {
             icon: serviceChannel,
-            label: "【BDG WIN】Official Channel",
+            label: "【BDG Cassino】Official Channel",
             route: "",
           },
         ].map((item, i) => (

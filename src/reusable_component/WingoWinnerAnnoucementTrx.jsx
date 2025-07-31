@@ -16,7 +16,7 @@ const WingoWinnerAnnoucementTrx = ({ data, onClose }) => {
             const timer = setTimeout(() => {
                 onClose();
             }, 3000);
-
+console.log("data winner 2", data);
             return () => clearTimeout(timer);
         }
     }, [autoCloseEnabled]);

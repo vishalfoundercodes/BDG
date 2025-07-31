@@ -212,7 +212,7 @@ const handleSubmit = async(e) => {
         {renderImageUpload("Photo Deposit Receipt Proof 1", "deposit1")}
         {renderImageUpload("Photo of Deposit Receipt Proof 2", "deposit2")}
         {renderImageUpload(
-          "Photo of your own USDT address bind at BDG WIN",
+          "Photo of your own USDT address bind at BDG Cassino",
           "bindAddress"
         )}
         {renderImageUpload("Photo of your new USDT address", "newAddress")}

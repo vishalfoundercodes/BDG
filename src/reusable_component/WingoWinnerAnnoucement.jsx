@@ -220,7 +220,7 @@ const WingoWinnerAnnoucement = ({ data, onClose }) => {
               )}
 
               {data?.win === 0 && (
-                <p className="text-2xl mt-3 text-red font-semibold">Lost</p>
+                <p className="text-2xl mt-3 text-red font-semibold">Loss</p>
               )}
 
               {/* Game Period Info */}
